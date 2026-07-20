@@ -48,31 +48,33 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import VVideos, {
-  type QualityItem,
-  type DanmuItem,
+  defaultDanmus,
+  defaultQualities,
+  defaultMoreActions,
+  defaultRates,
+  formatTime,
+  type MoreActionItem,
 } from '@/components/v-videos'
 
 const playerRef = ref<InstanceType<typeof VVideos> | null>(null)
 const videoSrc = ref('https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/2minute-demo.mp4')
 
-const qualities: QualityItem[] = [
-  { label: '1080P 原画', url: 'https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/2minute-demo.mp4' },
-  { label: '720P 超清', url: 'https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/2minute-demo.mp4' },
-  { label: '480P 清晰', url: 'https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/2minute-demo.mp4' },
-]
-
-const danmus: DanmuItem[] = [
-  { text: '前排围观！', time: 1, color: '#ffffff' },
-  { text: 'uni-app 跨平台真香', time: 3, color: '#22c55e' },
-  { text: '弹幕来喽～～～', time: 5, color: '#f59e0b' },
-]
+// 直接复用预设配置，也可自定义传入
+const qualities = defaultQualities
+const danmus = defaultDanmus
+const moreActions = defaultMoreActions
+const rates = defaultRates
 
 function onPlay() {
   console.log('开始播放')
 }
 
 function onTimeUpdate(payload: { currentTime: number; duration: number }) {
-  console.log('当前进度：', payload.currentTime)
+  console.log('当前进度：', formatTime(payload.currentTime))
+}
+
+function onMoreActionClick(payload: { item: MoreActionItem; index: number; key: string }) {
+  console.log('点击更多操作：', payload.item.label)
 }
 </script>
 ```
@@ -97,6 +99,9 @@ function onTimeUpdate(payload: { currentTime: number; duration: number }) {
 | `moreActions` | `MoreActionItem[]` | 默认2项 | 自定义“更多”操作面板列表（支持传入 2、10、20+ 项菜单） |
 | `rates` | `number[]` | `[0.5, 0.75, 1.0, 1.25, 1.5, 2.0]` | 可选播放倍速选项列表 |
 | `rate` | `number` | `1.0` | 初始播放倍速 |
+| `loading` | `boolean` | `false` | 是否处于缓冲/卡顿加载状态（为 true 时展示加载浮层） |
+| `loadingText` | `string` | `"加载中..."` | 加载状态提示文字 |
+| `loadingIcon` | `string` | `""` | 自定义加载图标（支持 Unicode / 文本 / 图片 URL） |
 | `qualities` | `QualityItem[]` | `[]` | 清晰度切换列表 |
 | `danmus` | `DanmuItem[]` | `[]` | 初始弹幕列表 |
 | `icons` | `Partial<Record<IconKey, string>>` | `{}` | 自定义控制条图标（支持 Unicode/文本或图片 URL） |
@@ -144,6 +149,9 @@ playerRef.value?.toggleDanmaku()
 
 // 切换清晰度
 playerRef.value?.selectQuality(0)
+
+// 切换倍速
+playerRef.value?.playbackRate(1.5)
 ```
 
 ---
@@ -171,13 +179,14 @@ src/components/v-videos/
 ├── v-videos.vue                     # SFC 视图模板与逻辑入口
 ├── index.ts                         # 模块导出统一入口
 ├── types.ts                         # 完备的 TypeScript 接口声明
+├── config.ts                        # 预设配置与 formatTime 工具函数
 ├── styles/                          # CSS 独立样式目录
 │   ├── vars.css                     # CSS 自定义变量主题定义
 │   ├── common.css                   # 公共重复 CSS 样式类
 │   └── video-player.css             # 播放器组件主样式表
 └── composables/                     # TS 核心逻辑模块化抽离
     ├── useVideoPlayer.ts            # 主 Hook 装配与调度
-    ├── useVideoControls.ts         # 播放状态、清晰度与 VideoContext
+    ├── useVideoControls.ts         # 播放状态、清晰度、倍速与 VideoContext
     ├── useDanmaku.ts               # 弹幕动画引擎与弹幕设置
     ├── useVideoGestures.ts         # 进度条与滑块触摸手势
     ├── useVideoEvents.ts           # 视频原生 DOM/小程序事件句柄

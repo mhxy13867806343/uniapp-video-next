@@ -48,31 +48,33 @@ Import and use the `v-videos` component directly in your pages:
 <script setup lang="ts">
 import { ref } from 'vue'
 import VVideos, {
-  type QualityItem,
-  type DanmuItem,
+  defaultDanmus,
+  defaultQualities,
+  defaultMoreActions,
+  defaultRates,
+  formatTime,
+  type MoreActionItem,
 } from '@/components/v-videos'
 
 const playerRef = ref<InstanceType<typeof VVideos> | null>(null)
 const videoSrc = ref('https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/2minute-demo.mp4')
 
-const qualities: QualityItem[] = [
-  { label: '1080P Original', url: 'https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/2minute-demo.mp4' },
-  { label: '720P HD', url: 'https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/2minute-demo.mp4' },
-  { label: '480P SD', url: 'https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/2minute-demo.mp4' },
-]
-
-const danmus: DanmuItem[] = [
-  { text: 'Awesome video!', time: 1, color: '#ffffff' },
-  { text: 'uni-app is fantastic', time: 3, color: '#22c55e' },
-  { text: 'Danmaku incoming!', time: 5, color: '#f59e0b' },
-]
+// Use built-in preset configurations or customize your own
+const qualities = defaultQualities
+const danmus = defaultDanmus
+const moreActions = defaultMoreActions
+const rates = defaultRates
 
 function onPlay() {
   console.log('Video started')
 }
 
 function onTimeUpdate(payload: { currentTime: number; duration: number }) {
-  console.log('Current time:', payload.currentTime)
+  console.log('Current time:', formatTime(payload.currentTime))
+}
+
+function onMoreActionClick(payload: { item: MoreActionItem; index: number; key: string }) {
+  console.log('More action clicked:', payload.item.label)
 }
 </script>
 ```
@@ -97,6 +99,9 @@ function onTimeUpdate(payload: { currentTime: number; duration: number }) {
 | `moreActions` | `MoreActionItem[]` | Default 2 items | Custom More actions list (Supports 2, 10, 20+ items) |
 | `rates` | `number[]` | `[0.5, 0.75, 1.0, 1.25, 1.5, 2.0]` | Configurable playback speed rate options |
 | `rate` | `number` | `1.0` | Initial playback speed rate |
+| `loading` | `boolean` | `false` | Network buffering / loading state (displays overlay when true) |
+| `loadingText` | `string` | `"加载中..."` | Loading overlay text indicator |
+| `loadingIcon` | `string` | `""` | Custom loading icon (Unicode / Text / Image URL) |
 | `qualities` | `QualityItem[]` | `[]` | List of video resolution qualities |
 | `danmus` | `DanmuItem[]` | `[]` | Initial list of danmaku bullet comments |
 | `icons` | `Partial<Record<IconKey, string>>` | `{}` | Custom control icons (Text/Unicode or Image URL) |
@@ -144,6 +149,9 @@ playerRef.value?.toggleDanmaku()
 
 // Select resolution quality
 playerRef.value?.selectQuality(0)
+
+// Change playback speed rate
+playerRef.value?.playbackRate(1.5)
 ```
 
 ---
@@ -171,13 +179,14 @@ src/components/v-videos/
 ├── v-videos.vue                     # SFC template & component script entry
 ├── index.ts                         # Unified module exports
 ├── types.ts                         # TypeScript interface & type definitions
+├── config.ts                        # Presets configuration & formatTime helper
 ├── styles/                          # Stylesheets directory
 │   ├── vars.css                     # Theme & CSS variables
 │   ├── common.css                   # Extracted reusable CSS utilities
 │   └── video-player.css             # Main player stylesheet
 └── composables/                     # Business logic composables
     ├── useVideoPlayer.ts            # Master orchestrator composable
-    ├── useVideoControls.ts         # Playback state, quality & VideoContext API
+    ├── useVideoControls.ts         # Playback state, quality, speed rate & VideoContext
     ├── useDanmaku.ts               # Danmaku animation engine & settings
     ├── useVideoGestures.ts         # Progress track & slider touch gestures
     ├── useVideoEvents.ts           # Native video event handlers
