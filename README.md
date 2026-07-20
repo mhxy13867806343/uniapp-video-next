@@ -13,11 +13,15 @@
 ## ✨ 特性
 
 - 🚀 **Vue 3 Composition API & TypeScript**：模块化 Composables 拆分，提供完备的类型声明与类型推导。
+- 🔴 **直播源模式支持 (Live Streaming Support)**：支持 `:is-live="true"` 模式，自动隐藏总时长与进度条，提供动态脉冲 `LIVE` 状态 Tag 标识（支持自定义 `:live-text`）。
 - 💬 **高性能弹幕引擎 (Danmaku Engine)**：
   - 平滑动画、自动轨道排版。
   - 支持弹幕显示区域、不透明度、字体大小、弹幕速度自定义调整。
   - 内置 Emoji 表情盘与多彩弹幕选择器。
 - 📺 **多清晰度无缝切换**：支持多档清晰度（如 1080P, 720P, 480P, 自动），切换时自动记录并恢复播放进度。
+- ⚡ **海量自定义 Action 面板**：支持传入自定义操作列表（2 项、10 项、20+ 项网格扩展），带有点击回调代理 `@moreactionclick`。
+- 🚀 **播放倍速配置与选择**：支持自定义倍速列表 `:rates="[0.5, 0.75, 1.0, 1.25, 1.5, 2.0]"`，支持实例方法切换。
+- ⏳ **网络 Loading 加载浮层**：自动与手动支持卡顿缓冲状态浮层 `:loading`、`:loading-text` 与 `:loading-icon`。
 - 🎨 **CSS 变量与灵活主题**：基于 CSS Custom Properties (`--vp-*`)，轻松定制色彩、阴影、圆角与毛玻璃面板样式。
 - 📱 **全平台兼容 (Cross-Platform)**：适配 H5、微信小程序 (WeChat Mini Program)、App (iOS / Android) 及 鸿蒙 (HarmonyOS)。
 - 👆 **触控手势支持**：进度条平滑拖拽预览、音量调节面板与滑块手势。
@@ -36,11 +40,15 @@
     <v-videos
       ref="playerRef"
       :src="videoSrc"
+      title="uni-app 视频播放演示"
       :custom-controls="true"
+      :is-live="false"
       :qualities="qualities"
       :danmus="danmus"
+      :more-actions="moreActions"
       @play="onPlay"
       @timeupdate="onTimeUpdate"
+      @moreactionclick="onMoreActionClick"
     />
   </view>
 </template>
@@ -95,6 +103,8 @@ function onMoreActionClick(payload: { item: MoreActionItem; index: number; key: 
 | `objectFit` | `"contain" \| "fill" \| "cover"` | `"contain"` | 视频同比例缩放模式 |
 | `initialTime` | `number` | `0` | 初始播放位置（秒） |
 | `title` | `string` | `""` | 视频标题（全屏/顶部 Header 展示） |
+| `isLive` | `boolean` | `false` | 是否为直播源（为 true 时隐藏进度条与时间，展示动态 Tag） |
+| `liveText` | `string` | `"直播中"` | 直播状态 Tag 显示文本（如 `"🔴 LIVE"`） |
 | `showMoreBtn` | `boolean` | `true` | 是否在控制条显示“更多”按钮 (`•••`) |
 | `moreActions` | `MoreActionItem[]` | 默认2项 | 自定义“更多”操作面板列表（支持传入 2、10、20+ 项菜单） |
 | `rates` | `number[]` | `[0.5, 0.75, 1.0, 1.25, 1.5, 2.0]` | 可选播放倍速选项列表 |
@@ -175,22 +185,29 @@ playerRef.value?.playbackRate(1.5)
 ## 📂 项目文件结构
 
 ```
-src/components/v-videos/
-├── v-videos.vue                     # SFC 视图模板与逻辑入口
-├── index.ts                         # 模块导出统一入口
-├── types.ts                         # 完备的 TypeScript 接口声明
-├── config.ts                        # 预设配置与 formatTime 工具函数
-├── styles/                          # CSS 独立样式目录
-│   ├── vars.css                     # CSS 自定义变量主题定义
-│   ├── common.css                   # 公共重复 CSS 样式类
-│   └── video-player.css             # 播放器组件主样式表
-└── composables/                     # TS 核心逻辑模块化抽离
-    ├── useVideoPlayer.ts            # 主 Hook 装配与调度
-    ├── useVideoControls.ts         # 播放状态、清晰度、倍速与 VideoContext
-    ├── useDanmaku.ts               # 弹幕动画引擎与弹幕设置
-    ├── useVideoGestures.ts         # 进度条与滑块触摸手势
-    ├── useVideoEvents.ts           # 视频原生 DOM/小程序事件句柄
-    └── useVideoOptions.ts          # 参数合并与图标配置
+src/
+├── components/v-videos/             # v-videos 播放器核心组件
+│   ├── v-videos.vue                 # SFC 视图模板与逻辑入口
+│   ├── index.ts                     # 模块导出统一入口
+│   ├── types.ts                     # 完备的 TypeScript 接口声明
+│   ├── config.ts                    # 预设配置与 formatTime 工具函数
+│   ├── styles/                      # CSS 独立样式目录
+│   │   ├── vars.css                 # CSS 自定义变量主题定义
+│   │   ├── common.css               # 公共重复 CSS 样式类
+│   │   └── video-player.css         # 播放器组件主样式表
+│   └── composables/                 # TS 核心逻辑模块化抽离
+│       ├── useVideoPlayer.ts        # 主 Hook 装配与调度
+│       ├── useVideoControls.ts     # 播放状态、清晰度、倍速与 VideoContext
+│       ├── useDanmaku.ts           # 弹幕动画引擎与弹幕设置
+│       ├── useVideoGestures.ts     # 进度条与滑块触摸手势
+│       ├── useVideoEvents.ts       # 视频原生 DOM/小程序事件句柄
+│       └── useVideoOptions.ts      # 参数合并与图标配置
+└── pages/                           # 页面与功能测试中心
+    ├── index/index.vue              # 导航主页面与基础演示
+    ├── demo-live/demo-live.vue      # 直播源功能测试页面
+    ├── demo-more/demo-more.vue      # 更多操作面板测试页面
+    ├── demo-rate/demo-rate.vue      # 播放倍速切换测试页面
+    └── demo-loading/demo-loading.vue# 网络 Loading 状态测试页面
 ```
 
 ---

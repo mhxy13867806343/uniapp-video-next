@@ -13,11 +13,15 @@
 ## ✨ Features
 
 - 🚀 **Vue 3 Composition API & TypeScript**: Fully modularized with Composables, offering complete type declarations and automatic type inference.
+- 🔴 **Live Streaming Support**: Built-in `:is-live="true"` mode, automatically hiding duration & progress bar, displaying a pulsing live status badge (Customizable via `:live-text`).
 - 💬 **High-Performance Danmaku Engine**:
   - Smooth CSS animation with collision-free track scheduling.
   - Custom settings for display area, opacity, font size, and scrolling speed.
   - Built-in Emoji picker and color palette for bullet comments.
 - 📺 **Seamless Quality Switching**: Multi-grade resolution support (e.g. 1080P, 720P, 480P, Auto) with automatic playback position recovery upon switching.
+- ⚡ **Extensible Custom Actions Panel**: Grid action panel supporting 2, 10, or 20+ custom menu items with `@moreactionclick` callback delegation.
+- 🚀 **Configurable Speed Rates**: Configurable speed list via `:rates="[0.5, 0.75, 1.0, 1.25, 1.5, 2.0]"` and component API `playbackRate()`.
+- ⏳ **Buffering & Loading Overlay**: Automatic and manual loading overlay state `:loading`, `:loading-text`, and `:loading-icon`.
 - 🎨 **CSS Variables & Custom Themes**: Driven by CSS Custom Properties (`--vp-*`) for effortless customization of colors, shadows, radius, and glassmorphism panel styles.
 - 📱 **Cross-Platform Compatibility**: Fully tested across H5, WeChat Mini Program, App (iOS / Android), and HarmonyOS.
 - 👆 **Intuitive Touch Gestures**: Smooth progress bar scrubbing preview, volume adjustment panel, and slider touch gestures.
@@ -36,11 +40,15 @@ Import and use the `v-videos` component directly in your pages:
     <v-videos
       ref="playerRef"
       :src="videoSrc"
+      title="uni-app Video Demo"
       :custom-controls="true"
+      :is-live="false"
       :qualities="qualities"
       :danmus="danmus"
+      :more-actions="moreActions"
       @play="onPlay"
       @timeupdate="onTimeUpdate"
+      @moreactionclick="onMoreActionClick"
     />
   </view>
 </template>
@@ -95,6 +103,8 @@ function onMoreActionClick(payload: { item: MoreActionItem; index: number; key: 
 | `objectFit` | `"contain" \| "fill" \| "cover"` | `"contain"` | Video fitting mode |
 | `initialTime` | `number` | `0` | Initial playback start time (seconds) |
 | `title` | `string` | `""` | Video title (displayed on Top Header in Fullscreen) |
+| `isLive` | `boolean` | `false` | Live stream source mode (Hides progress bar & duration when true) |
+| `liveText` | `string` | `"直播中"` | Live stream status tag label (e.g. `"🔴 LIVE"`) |
 | `showMoreBtn` | `boolean` | `true` | Show "More" action button (`•••`) in control bar |
 | `moreActions` | `MoreActionItem[]` | Default 2 items | Custom More actions list (Supports 2, 10, 20+ items) |
 | `rates` | `number[]` | `[0.5, 0.75, 1.0, 1.25, 1.5, 2.0]` | Configurable playback speed rate options |
@@ -103,6 +113,9 @@ function onMoreActionClick(payload: { item: MoreActionItem; index: number; key: 
 | `loadingText` | `string` | `"加载中..."` | Loading overlay text indicator |
 | `loadingIcon` | `string` | `""` | Custom loading icon (Unicode / Text / Image URL) |
 | `qualities` | `QualityItem[]` | `[]` | List of video resolution qualities |
+| `danmus` | `DanmuItem[]` | `[]` | Initial list of danmaku bullet comments |
+| `icons` | `Partial<Record<IconKey, string>>` | `{}` | Custom control icons (Text/Unicode or Image URL) |
+| `platformConfig` | `VideoPlatformConfig` | `{}` | Platform-specific overrides (H5 / WeChat Mini Program / App) |
 | `danmus` | `DanmuItem[]` | `[]` | Initial list of danmaku bullet comments |
 | `icons` | `Partial<Record<IconKey, string>>` | `{}` | Custom control icons (Text/Unicode or Image URL) |
 | `platformConfig` | `VideoPlatformConfig` | `{}` | Platform-specific overrides (H5 / WeChat Mini Program / App) |
@@ -175,22 +188,29 @@ Customize player theme variables globally or within scoped page styles:
 ## 📂 Directory Structure
 
 ```
-src/components/v-videos/
-├── v-videos.vue                     # SFC template & component script entry
-├── index.ts                         # Unified module exports
-├── types.ts                         # TypeScript interface & type definitions
-├── config.ts                        # Presets configuration & formatTime helper
-├── styles/                          # Stylesheets directory
-│   ├── vars.css                     # Theme & CSS variables
-│   ├── common.css                   # Extracted reusable CSS utilities
-│   └── video-player.css             # Main player stylesheet
-└── composables/                     # Business logic composables
-    ├── useVideoPlayer.ts            # Master orchestrator composable
-    ├── useVideoControls.ts         # Playback state, quality, speed rate & VideoContext
-    ├── useDanmaku.ts               # Danmaku animation engine & settings
-    ├── useVideoGestures.ts         # Progress track & slider touch gestures
-    ├── useVideoEvents.ts           # Native video event handlers
-    └── useVideoOptions.ts          # Options merging & icons configuration
+src/
+├── components/v-videos/             # v-videos Core Component
+│   ├── v-videos.vue                 # SFC template & component script entry
+│   ├── index.ts                         # Unified module exports
+│   ├── types.ts                         # TypeScript interface & type definitions
+│   ├── config.ts                        # Presets configuration & formatTime helper
+│   ├── styles/                          # Stylesheets directory
+│   │   ├── vars.css                 # Theme & CSS variables
+│   │   ├── common.css               # Extracted reusable CSS utilities
+│   │   └── video-player.css         # Main player stylesheet
+│   └── composables/                 # Business logic composables
+│       ├── useVideoPlayer.ts        # Master orchestrator composable
+│       ├── useVideoControls.ts     # Playback state, quality, speed rate & VideoContext
+│       ├── useDanmaku.ts           # Danmaku animation engine & settings
+│       ├── useVideoGestures.ts     # Progress track & slider touch gestures
+│       ├── useVideoEvents.ts       # Native video event handlers
+│       └── useVideoOptions.ts      # Options merging & icons configuration
+└── pages/                           # Pages & Feature Testing Hub
+    ├── index/index.vue              # Main Navigation Hub & Basic Demo
+    ├── demo-live/demo-live.vue      # Live Stream Testing Page
+    ├── demo-more/demo-more.vue      # Custom More Actions Panel Testing Page
+    ├── demo-rate/demo-rate.vue      # Playback Speed Rate Testing Page
+    └── demo-loading/demo-loading.vue# Network Loading State Testing Page
 ```
 
 ---
