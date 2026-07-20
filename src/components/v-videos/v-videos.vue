@@ -138,10 +138,22 @@
         <text class="vp-topbar__title">{{ opts.title || '' }}</text>
       </view>
 
-      <view class="vp-overlay__center" @click.stop="togglePlay">
-        <text class="vp-overlay__center-icon">
-          {{ isPlaying ? iconOf('pause') : iconOf('play') }}
-        </text>
+      <!-- 居中播放/暂停按钮 (图片 2 & 3)，支持显隐与自定义图标/图片 -->
+      <view
+        v-if="opts.showCenterPlayBtn"
+        class="vp-overlay__center"
+        @click.stop="togglePlay"
+      >
+        <view class="vp-overlay__center-btn">
+          <image
+            v-if="isImageIcon(iconOf(isPlaying ? 'centerPause' : 'centerPlay'))"
+            class="vp-overlay__center-img"
+            :src="iconOf(isPlaying ? 'centerPause' : 'centerPlay')"
+          />
+          <text v-else class="vp-overlay__center-icon">
+            {{ iconOf(isPlaying ? 'centerPause' : 'centerPlay') }}
+          </text>
+        </view>
       </view>
 
       <view class="vp-overlay__bar" @click.stop>
@@ -153,23 +165,38 @@
         </template>
         <template v-else>
           <text class="vp-overlay__time">{{ formatTime(displayTime) }}</text>
+          <!-- 进度条 (图片 4)，支持显隐与自定义颜色/高度/滑块样式 -->
           <view
+            v-if="opts.showProgressBar"
             class="vp-progress"
+            :style="{ height: opts.progressHeight ? opts.progressHeight : undefined }"
             @click="onTrackClick"
             @touchstart="onTrackTouchStart"
             @touchmove="onTrackTouchMove"
             @touchend="onTrackTouchEnd"
             @touchcancel="onTrackTouchEnd"
           >
-            <view class="vp-progress__track">
+            <view
+              class="vp-progress__track"
+              :style="{
+                backgroundColor: opts.progressTrackColor ? opts.progressTrackColor : undefined,
+                height: opts.progressHeight ? opts.progressHeight : undefined
+              }"
+            >
               <view
                 class="vp-progress__played"
-                :style="{ width: progressPercent + '%' }"
+                :style="{
+                  width: progressPercent + '%',
+                  backgroundColor: opts.progressColor ? opts.progressColor : undefined
+                }"
               />
               <view
                 class="vp-progress__thumb"
                 :class="{ 'vp-progress__thumb--active': seeking }"
-                :style="{ left: progressPercent + '%' }"
+                :style="{
+                  left: progressPercent + '%',
+                  backgroundColor: opts.progressThumbColor ? opts.progressThumbColor : undefined
+                }"
               />
             </view>
           </view>

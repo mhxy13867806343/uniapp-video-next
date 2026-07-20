@@ -102,9 +102,12 @@ function onMoreActionClick(payload: { item: MoreActionItem; index: number; key: 
 | `customControls`| `boolean` | `false` | Enable custom control layer UI |
 | `objectFit` | `"contain" \| "fill" \| "cover"` | `"contain"` | Video fitting mode |
 | `initialTime` | `number` | `0` | Initial playback start time (seconds) |
-| `title` | `string` | `""` | Video title (displayed on Top Header in Fullscreen) |
-| `isLive` | `boolean` | `false` | Live stream source mode (Hides progress bar & duration when true) |
-| `liveText` | `string` | `"直播中"` | Live stream status tag label (e.g. `"🔴 LIVE"`) |
+| `showCenterPlayBtn` | `boolean` | `true` | Show center Play/Pause overlay button (Image 2 & 3, customizable) |
+| `showProgressBar` | `boolean` | `true` | Show bottom progress bar track (Image 4, customizable) |
+| `progressColor` | `string` | `""` | Played active track color (e.g. `#22c55e`, `#3b82f6`) |
+| `progressTrackColor` | `string` | `""` | Unplayed track background color (e.g. `rgba(255,255,255,0.2)`) |
+| `progressThumbColor` | `string` | `""` | Progress thumb dot color (e.g. `#ffffff`) |
+| `progressHeight` | `string` | `""` | Progress bar track height (e.g. `4rpx`, `6rpx`, `12rpx`) |
 | `showDanmakuBtn` | `boolean` | `true` | Show danmaku master toggle button |
 | `showDanmakuSettingBtn` | `boolean` | `true` | Show danmaku settings button |
 | `showSendInput` | `boolean` | `true` | Show send danmaku input entry |

@@ -89,7 +89,9 @@ export type IconKey =
   | "back"
   | "loading"
   | "rate"
-  | "episodes";
+  | "episodes"
+  | "centerPlay"
+  | "centerPause";
 
 export interface EpisodeItem {
   number?: number | string;
@@ -111,6 +113,11 @@ export interface VideoPlayerOptions {
   showFullscreenBtn?: boolean;
   showPlayBtn?: boolean;
   showCenterPlayBtn?: boolean;
+  showProgressBar?: boolean;
+  progressColor?: string;
+  progressTrackColor?: string;
+  progressThumbColor?: string;
+  progressHeight?: string;
   showMoreBtn?: boolean;
   showDanmakuBtn?: boolean;
   showDanmakuSettingBtn?: boolean;

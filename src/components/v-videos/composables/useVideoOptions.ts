@@ -17,6 +17,11 @@ export const defaultOptions: Required<Omit<VideoPlayerOptions, never>> = {
   showFullscreenBtn: true,
   showPlayBtn: true,
   showCenterPlayBtn: true,
+  showProgressBar: true,
+  progressColor: "",
+  progressTrackColor: "",
+  progressThumbColor: "",
+  progressHeight: "",
   showMoreBtn: true,
   showDanmakuBtn: true,
   showDanmakuSettingBtn: true,
@@ -87,6 +92,8 @@ export const defaultIcons: Record<IconKey, string> = {
   loading: "⏳",
   rate: "倍速",
   episodes: "选集",
+  centerPlay: "▶",
+  centerPause: "❚❚",
 };
 
 export function useVideoOptions(props: VideoPlayerProps) {

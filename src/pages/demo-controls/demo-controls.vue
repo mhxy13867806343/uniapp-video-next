@@ -1,8 +1,8 @@
 <template>
   <view class="demo-page">
     <view class="demo-header">
-      <text class="demo-title">⚙️ 控制条按键自由显隐配置测试</text>
-      <text class="demo-desc">默认全为 true，可任意指定独立按键隐藏或显示，即时响应控制条布局。</text>
+      <text class="demo-title">⚙️ 控制条按键显隐与进度条/居中图标自定义</text>
+      <text class="demo-desc">支持显隐控制（进度条、居中播放图标、底栏所有按键），并支持进度条颜色、高度、滑块及图标自定义。</text>
     </view>
 
     <!-- 播放器区域 -->
@@ -10,10 +10,16 @@
       <v-videos
         ref="playerRef"
         :src="videoSrc"
-        title="控制条按键配置演示"
+        title="控制条与进度条自定义演示"
         :custom-controls="true"
         :qualities="qualities"
         :episodes="episodes"
+        :show-center-play-btn="ctrls.showCenterPlayBtn"
+        :show-progress-bar="ctrls.showProgressBar"
+        :progress-color="progressColor"
+        :progress-height="progressHeight"
+        :progress-track-color="progressTrackColor"
+        :progress-thumb-color="progressThumbColor"
         :show-danmaku-btn="ctrls.showDanmakuBtn"
         :show-danmaku-setting-btn="ctrls.showDanmakuSettingBtn"
         :show-send-input="ctrls.showSendInput"
@@ -24,6 +30,7 @@
         :show-loop-btn="ctrls.showLoopBtn"
         :show-fullscreen-btn="ctrls.showFullscreenBtn"
         :show-more-btn="ctrls.showMoreBtn"
+        :icons="customIcons"
       />
     </view>
 
@@ -40,14 +47,68 @@
         </button>
 
         <button class="btn btn--purple" @click="presetPureMovie">
-          🎬 极简观影模式
+          🎬 纯净无打扰模式
         </button>
       </view>
     </view>
 
-    <!-- 独立按键开关矩阵 -->
+    <!-- 🎨 进度条 (图片 4) 自定义样式配置 -->
     <view class="control-card">
-      <text class="control-card__title">🎛 独立按键 Switch 开关矩阵</text>
+      <text class="control-card__title">🎨 进度条 (图片 4) 自定义样式配置</text>
+
+      <view class="style-row">
+        <text class="style-row__label">进度条颜色 (progressColor)：</text>
+        <view class="color-options">
+          <view
+            v-for="c in colorOptions"
+            :key="c.value"
+            class="color-dot"
+            :style="{ backgroundColor: c.color }"
+            :class="{ 'color-dot--active': progressColor === c.value }"
+            @click="progressColor = c.value"
+          />
+        </view>
+      </view>
+
+      <view class="style-row">
+        <text class="style-row__label">进度条高度 (progressHeight)：</text>
+        <view class="height-options">
+          <button
+            v-for="h in heightOptions"
+            :key="h"
+            class="btn btn--sm"
+            :class="{ 'btn--active': progressHeight === h }"
+            @click="progressHeight = h"
+          >
+            {{ h }}
+          </button>
+        </view>
+      </view>
+
+      <view class="style-row">
+        <text class="style-row__label">居中图标方案 (图片 2 & 3)：</text>
+        <view class="height-options">
+          <button
+            class="btn btn--sm"
+            :class="{ 'btn--active': iconPreset === 'default' }"
+            @click="setIconPreset('default')"
+          >
+            默认圆形绿调
+          </button>
+          <button
+            class="btn btn--sm"
+            :class="{ 'btn--active': iconPreset === 'emoji' }"
+            @click="setIconPreset('emoji')"
+          >
+            Emoji 风格 (⚡/⏸)
+          </button>
+        </view>
+      </view>
+    </view>
+
+    <!-- 🎛 独立按键与组件 Switch 开关矩阵 -->
+    <view class="control-card">
+      <text class="control-card__title">🎛 独立 Switch 隐显开关矩阵</text>
       
       <view class="switch-grid">
         <view v-for="item in switchItems" :key="item.key" class="switch-item">
@@ -73,7 +134,39 @@ const videoSrc = ref('https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/2minute-d
 const qualities = defaultQualities
 const episodes = defaultEpisodes
 
+const progressColor = ref('#22c55e')
+const progressHeight = ref('6rpx')
+const progressTrackColor = ref('rgba(255, 255, 255, 0.2)')
+const progressThumbColor = ref('#ffffff')
+
+const colorOptions = [
+  { value: '#22c55e', color: '#22c55e' }, // 翡翠绿
+  { value: '#3b82f6', color: '#3b82f6' }, // 科技蓝
+  { value: '#a855f7', color: '#a855f7' }, // 霓虹紫
+  { value: '#ef4444', color: '#ef4444' }, // 警示红
+  { value: '#f59e0b', color: '#f59e0b' }, // 琥珀黄
+]
+
+const heightOptions = ['4rpx', '6rpx', '8rpx', '12rpx']
+
+const iconPreset = ref<'default' | 'emoji'>('default')
+const customIcons = ref<Record<string, string>>({})
+
+function setIconPreset(preset: 'default' | 'emoji') {
+  iconPreset.value = preset
+  if (preset === 'emoji') {
+    customIcons.value = {
+      centerPlay: '🚀',
+      centerPause: '⏸',
+    }
+  } else {
+    customIcons.value = {}
+  }
+}
+
 interface ControlSwitches {
+  showCenterPlayBtn: boolean
+  showProgressBar: boolean
   showDanmakuBtn: boolean
   showDanmakuSettingBtn: boolean
   showSendInput: boolean
@@ -87,6 +180,8 @@ interface ControlSwitches {
 }
 
 const ctrls = reactive<ControlSwitches>({
+  showCenterPlayBtn: true,
+  showProgressBar: true,
   showDanmakuBtn: true,
   showDanmakuSettingBtn: true,
   showSendInput: true,
@@ -102,6 +197,8 @@ const ctrls = reactive<ControlSwitches>({
 type ControlKey = keyof ControlSwitches
 
 const switchItems: { key: ControlKey; label: string }[] = [
+  { key: 'showCenterPlayBtn', label: '居中大播放/暂停图标 (图片2 & 3)' },
+  { key: 'showProgressBar', label: '底栏播放进度条 (图片4)' },
   { key: 'showDanmakuBtn', label: '弹幕开关 (danmaku)' },
   { key: 'showDanmakuSettingBtn', label: '弹幕设置 (setting)' },
   { key: 'showSendInput', label: '发弹幕输入框 (input)' },
@@ -125,6 +222,8 @@ function setAll(val: boolean) {
 }
 
 function presetPureMovie() {
+  ctrls.showCenterPlayBtn = true
+  ctrls.showProgressBar = true
   ctrls.showDanmakuBtn = false
   ctrls.showDanmakuSettingBtn = false
   ctrls.showSendInput = false
@@ -152,7 +251,7 @@ function presetPureMovie() {
 
 .demo-title {
   color: #ffffff;
-  font-size: 34rpx;
+  font-size: 32rpx;
   font-weight: 700;
   display: block;
   margin-bottom: 8rpx;
@@ -202,6 +301,19 @@ function presetPureMovie() {
   line-height: 1.5;
 }
 
+.btn--sm {
+  font-size: 20rpx;
+  padding: 6rpx 18rpx;
+  border-radius: 10rpx;
+  background: rgba(255, 255, 255, 0.08);
+  color: #94a3b8;
+}
+
+.btn--active {
+  background: #22c55e;
+  color: #ffffff;
+}
+
 .btn--primary {
   background: #22c55e;
   color: #ffffff;
@@ -221,6 +333,7 @@ function presetPureMovie() {
   background: rgba(30, 41, 59, 0.7);
   border-radius: 24rpx;
   padding: 28rpx;
+  margin-bottom: 32rpx;
   border: 1rpx solid rgba(255, 255, 255, 0.08);
 }
 
@@ -230,6 +343,40 @@ function presetPureMovie() {
   font-weight: 600;
   display: block;
   margin-bottom: 24rpx;
+}
+
+.style-row {
+  margin-bottom: 24rpx;
+}
+
+.style-row__label {
+  color: #cbd5e1;
+  font-size: 24rpx;
+  display: block;
+  margin-bottom: 12rpx;
+}
+
+.color-options {
+  display: flex;
+  gap: 20rpx;
+}
+
+.color-dot {
+  width: 44rpx;
+  height: 44rpx;
+  border-radius: 50%;
+  border: 3rpx solid transparent;
+  transition: transform 0.15s ease;
+}
+
+.color-dot--active {
+  border-color: #ffffff;
+  transform: scale(1.15);
+}
+
+.height-options {
+  display: flex;
+  gap: 12rpx;
 }
 
 .switch-grid {

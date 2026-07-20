@@ -102,9 +102,12 @@ function onMoreActionClick(payload: { item: MoreActionItem; index: number; key: 
 | `customControls`| `boolean` | `false` | 是否启用自定义控制层 UI |
 | `objectFit` | `"contain" \| "fill" \| "cover"` | `"contain"` | 视频同比例缩放模式 |
 | `initialTime` | `number` | `0` | 初始播放位置（秒） |
-| `title` | `string` | `""` | 视频标题（全屏/顶部 Header 展示） |
-| `isLive` | `boolean` | `false` | 是否为直播源（为 true 时隐藏进度条与时间，展示动态 Tag） |
-| `liveText` | `string` | `"直播中"` | 直播状态 Tag 显示文本（如 `"🔴 LIVE"`） |
+| `showCenterPlayBtn` | `boolean` | `true` | 是否显示居中大播放/暂停按钮（图片 2 & 3，支持自定义图标） |
+| `showProgressBar` | `boolean` | `true` | 是否显示底栏播放进度条（图片 4，支持显隐与样式自定义） |
+| `progressColor` | `string` | `""` | 进度条高亮已播放颜色（如 `#22c55e`、`#3b82f6`） |
+| `progressTrackColor` | `string` | `""` | 进度条未播放轨道颜色（如 `rgba(255,255,255,0.2)`） |
+| `progressThumbColor` | `string` | `""` | 进度条拖拽滑块 Dot 颜色（如 `#ffffff`） |
+| `progressHeight` | `string` | `""` | 进度条高度（如 `4rpx`、`6rpx`、`12rpx`） |
 | `showDanmakuBtn` | `boolean` | `true` | 是否显示弹幕总开关按钮 |
 | `showDanmakuSettingBtn` | `boolean` | `true` | 是否显示弹幕设置按钮 |
 | `showSendInput` | `boolean` | `true` | 是否显示“发个弹幕吧～”输入框 |
