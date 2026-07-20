@@ -145,28 +145,36 @@
       </view>
 
       <view class="vp-overlay__bar" @click.stop>
-        <text class="vp-overlay__time">{{ formatTime(displayTime) }}</text>
-        <view
-          class="vp-progress"
-          @click="onTrackClick"
-          @touchstart="onTrackTouchStart"
-          @touchmove="onTrackTouchMove"
-          @touchend="onTrackTouchEnd"
-          @touchcancel="onTrackTouchEnd"
-        >
-          <view class="vp-progress__track">
-            <view
-              class="vp-progress__played"
-              :style="{ width: progressPercent + '%' }"
-            />
-            <view
-              class="vp-progress__thumb"
-              :class="{ 'vp-progress__thumb--active': seeking }"
-              :style="{ left: progressPercent + '%' }"
-            />
+        <template v-if="opts.isLive">
+          <view class="vp-live-tag">
+            <text class="vp-live-tag__dot" />
+            <text class="vp-live-tag__text">{{ opts.liveText || '直播中' }}</text>
           </view>
-        </view>
-        <text class="vp-overlay__time">{{ formatTime(innerDuration) }}</text>
+        </template>
+        <template v-else>
+          <text class="vp-overlay__time">{{ formatTime(displayTime) }}</text>
+          <view
+            class="vp-progress"
+            @click="onTrackClick"
+            @touchstart="onTrackTouchStart"
+            @touchmove="onTrackTouchMove"
+            @touchend="onTrackTouchEnd"
+            @touchcancel="onTrackTouchEnd"
+          >
+            <view class="vp-progress__track">
+              <view
+                class="vp-progress__played"
+                :style="{ width: progressPercent + '%' }"
+              />
+              <view
+                class="vp-progress__thumb"
+                :class="{ 'vp-progress__thumb--active': seeking }"
+                :style="{ left: progressPercent + '%' }"
+              />
+            </view>
+          </view>
+          <text class="vp-overlay__time">{{ formatTime(innerDuration) }}</text>
+        </template>
       </view>
 
       <!-- 工具栏 -->
@@ -204,6 +212,7 @@
         </view>
 
         <view
+          v-if="!opts.isLive"
           class="vp-tool vp-tool--label"
           @click="togglePanel('rate')"
         >

@@ -108,6 +108,8 @@ export interface VideoPlayerOptions {
   loadingIcon?: string;
   rates?: number[];
   rate?: number;
+  isLive?: boolean;
+  liveText?: string;
   enableProgressGesture?: boolean;
   pageGesture?: boolean;
   vslideGesture?: boolean;
@@ -134,7 +136,6 @@ export interface VideoPlayerOptions {
   httpCache?: boolean;
   playStrategy?: 0 | 1 | 2 | 3 | 4 | 5;
   header?: Record<string, string>;
-  isLive?: boolean;
   pictureInPictureMode?: string | string[];
   pictureInPictureShowProgress?: boolean;
   enableAutoRotation?: boolean;

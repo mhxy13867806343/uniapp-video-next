@@ -1,22 +1,50 @@
 {
-	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+	"pages": [
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "uni-app"
+				"navigationBarTitleText": "v-videos 播放器测试中心",
+				"navigationBarBackgroundColor": "#0f1115",
+				"navigationBarTextStyle": "white"
 			}
 		},
 		{
-			"path": "pages/video/index",
+			"path": "pages/demo-live/demo-live",
 			"style": {
-				"navigationBarTitleText": "视频播放"
+				"navigationBarTitleText": "直播源功能测试",
+				"navigationBarBackgroundColor": "#0f1115",
+				"navigationBarTextStyle": "white"
+			}
+		},
+		{
+			"path": "pages/demo-more/demo-more",
+			"style": {
+				"navigationBarTitleText": "更多操作面板测试",
+				"navigationBarBackgroundColor": "#0f1115",
+				"navigationBarTextStyle": "white"
+			}
+		},
+		{
+			"path": "pages/demo-rate/demo-rate",
+			"style": {
+				"navigationBarTitleText": "播放倍速切换测试",
+				"navigationBarBackgroundColor": "#0f1115",
+				"navigationBarTextStyle": "white"
+			}
+		},
+		{
+			"path": "pages/demo-loading/demo-loading",
+			"style": {
+				"navigationBarTitleText": "网络 Loading 状态测试",
+				"navigationBarBackgroundColor": "#0f1115",
+				"navigationBarTextStyle": "white"
 			}
 		}
 	],
 	"globalStyle": {
-		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "uni-app",
-		"navigationBarBackgroundColor": "#F8F8F8",
-		"backgroundColor": "#F8F8F8"
+		"navigationBarTextStyle": "white",
+		"navigationBarTitleText": "v-videos",
+		"navigationBarBackgroundColor": "#0f1115",
+		"backgroundColor": "#0f1115"
 	}
 }
