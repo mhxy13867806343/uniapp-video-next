@@ -1,6 +1,7 @@
 import VVideos from "./v-videos.vue";
 
 export * from "./types";
+export * from "./config";
 export * from "./composables/useVideoOptions";
 export * from "./composables/useVideoControls";
 export * from "./composables/useDanmaku";

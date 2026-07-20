@@ -17,6 +17,7 @@ export function useVideoEvents(
   seeking: Ref<boolean>,
   pendingSeek: Ref<number | null>,
   isFullScreen: Ref<boolean>,
+  isBuffering: Ref<boolean>,
   scheduleHide: () => void,
   clearHideTimer: () => void,
   danmakuTick: (currentTime: number, previousTime: number) => void,
@@ -24,6 +25,7 @@ export function useVideoEvents(
 ) {
   function onPlay(): void {
     isPlaying.value = true;
+    isBuffering.value = false;
     scheduleHide();
     emit("play");
   }
@@ -37,6 +39,7 @@ export function useVideoEvents(
 
   function onEnded(): void {
     isPlaying.value = false;
+    isBuffering.value = false;
     controlsVisible.value = true;
     clearHideTimer();
     emit("ended");
@@ -54,6 +57,9 @@ export function useVideoEvents(
     const currentTime: number = detail?.currentTime ?? 0;
     const duration: number = detail?.duration ?? 0;
     const previous: number = innerCurrent.value;
+    if (isBuffering.value) {
+      isBuffering.value = false;
+    }
     if (pendingSeek.value !== null && duration > 0) {
       seek(pendingSeek.value);
       pendingSeek.value = null;
@@ -75,10 +81,12 @@ export function useVideoEvents(
   }
 
   function onWaiting(): void {
+    isBuffering.value = true;
     emit("waiting");
   }
 
   function onError(e: unknown): void {
+    isBuffering.value = false;
     emit("error", e);
   }
 
@@ -89,18 +97,22 @@ export function useVideoEvents(
   }
 
   function onLoadedData(e: unknown): void {
+    isBuffering.value = false;
     emit("loadeddata", e);
   }
 
   function onLoadStart(e: unknown): void {
+    isBuffering.value = true;
     emit("loadstart", e);
   }
 
   function onSeeked(e: unknown): void {
+    isBuffering.value = false;
     emit("seeked", e);
   }
 
   function onSeeking(e: unknown): void {
+    isBuffering.value = true;
     emit("seeking", e);
   }
 

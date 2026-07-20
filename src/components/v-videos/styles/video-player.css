@@ -600,3 +600,58 @@
   text-overflow: ellipsis;
   max-width: 100%;
 }
+
+/* ===== Loading 加载动画 ===== */
+.vp-loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 15;
+  pointer-events: none;
+}
+
+.vp-loading__box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24rpx 36rpx;
+  border-radius: var(--vp-radius-lg);
+  background: var(--vp-overlay-bg);
+  backdrop-filter: var(--vp-backdrop-blur-sm);
+  border: 2rpx solid rgba(255, 255, 255, 0.15);
+  gap: 12rpx;
+}
+
+.vp-loading__spinner {
+  width: 44rpx;
+  height: 44rpx;
+  border: 4rpx solid rgba(255, 255, 255, 0.2);
+  border-top-color: var(--vp-primary-color);
+  border-radius: 50%;
+  animation: vp-spin 0.8s linear infinite;
+}
+
+@keyframes vp-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.vp-loading__icon {
+  font-size: 40rpx;
+  line-height: 1;
+}
+
+.vp-loading__img {
+  width: 48rpx;
+  height: 48rpx;
+  animation: vp-spin 1.2s linear infinite;
+}
+
+.vp-loading__text {
+  color: var(--vp-text-primary);
+  font-size: 24rpx;
+  white-space: nowrap;
+}

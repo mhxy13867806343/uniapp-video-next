@@ -68,6 +68,7 @@ export function useVideoPlayer(props: VideoPlayerProps, emit: VideoPlayerEmits) 
     controls.seeking,
     controls.pendingSeek,
     controls.isFullScreen,
+    controls.isBuffering,
     controls.scheduleHide,
     controls.clearHideTimer,
     danmaku.danmakuTick,

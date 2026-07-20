@@ -93,6 +93,24 @@
           {{ item.text }}
         </text>
       </view>
+    <!-- 网络缓冲/加载层 (仅 isLoading 为 true 时展示) -->
+    <view
+      v-if="isLoading"
+      class="vp-loading"
+      @click.stop
+    >
+      <view class="vp-loading__box">
+        <image
+          v-if="opts.loadingIcon && isImageIcon(opts.loadingIcon)"
+          class="vp-loading__img"
+          :src="opts.loadingIcon"
+        />
+        <text v-else-if="opts.loadingIcon" class="vp-loading__icon">
+          {{ opts.loadingIcon }}
+        </text>
+        <view v-else class="vp-loading__spinner" />
+        <text class="vp-loading__text">{{ opts.loadingText || '加载中...' }}</text>
+      </view>
     </view>
 
     <!-- 自定义控制层 -->
@@ -476,6 +494,8 @@ const {
   qualityOptions,
   currentQualityLabel,
   isFullScreen,
+  isBuffering,
+  isLoading,
   activeMoreActions,
   onMoreActionClick,
   toggleControls,

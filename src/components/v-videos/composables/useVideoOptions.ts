@@ -19,6 +19,9 @@ export const defaultOptions: Required<Omit<VideoPlayerOptions, never>> = {
   showCenterPlayBtn: true,
   showMoreBtn: true,
   moreActions: [],
+  loading: false,
+  loadingText: "加载中...",
+  loadingIcon: "",
   enableProgressGesture: true,
   pageGesture: false,
   vslideGesture: false,
@@ -67,6 +70,7 @@ export const defaultIcons: Record<IconKey, string> = {
   fullscreen: "⛶",
   more: "•••",
   back: "←",
+  loading: "⏳",
 };
 
 export function useVideoOptions(props: VideoPlayerProps) {

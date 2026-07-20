@@ -86,7 +86,8 @@ export type IconKey =
   | "danmuSetting"
   | "fullscreen"
   | "more"
-  | "back";
+  | "back"
+  | "loading";
 
 export interface VideoPlayerOptions {
   poster?: string;
@@ -101,6 +102,9 @@ export interface VideoPlayerOptions {
   showCenterPlayBtn?: boolean;
   showMoreBtn?: boolean;
   moreActions?: MoreActionItem[];
+  loading?: boolean;
+  loadingText?: string;
+  loadingIcon?: string;
   enableProgressGesture?: boolean;
   pageGesture?: boolean;
   vslideGesture?: boolean;

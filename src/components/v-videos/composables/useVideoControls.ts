@@ -17,6 +17,7 @@ import type {
   VideoPlayerProps,
   VideoPlayerEmits,
 } from "../types";
+import { defaultMoreActions, formatTime } from "../config";
 
 export function useVideoControls(
   props: VideoPlayerProps,
@@ -29,6 +30,7 @@ export function useVideoControls(
 
   const isPlaying: Ref<boolean> = ref<boolean>(false);
   const controlsVisible: Ref<boolean> = ref<boolean>(true);
+  const isBuffering: Ref<boolean> = ref<boolean>(false);
   const innerCurrent: Ref<number> = ref<number>(0);
   const innerDuration: Ref<number> = ref<number>(0);
   const seeking: Ref<boolean> = ref<boolean>(false);
@@ -36,6 +38,13 @@ export function useVideoControls(
   const loopOn: Ref<boolean> = ref<boolean>(false);
   const mutedOn: Ref<boolean> = ref<boolean>(false);
   const volume: Ref<number> = ref<number>(100);
+
+  const isLoading = computed<boolean>(() => {
+    if (props.loading) {
+      return true;
+    }
+    return isBuffering.value;
+  });
 
   const activeQuality: Ref<number> = ref<number>(-1);
   const activeSrc: Ref<string> = ref<string>(props.src);
@@ -212,19 +221,7 @@ export function useVideoControls(
     loopOn.value = !loopOn.value;
   }
 
-  function formatTime(seconds: number): string {
-    const s: number = Math.floor(seconds || 0);
-    const m: number = Math.floor(s / 60);
-    const rest: number = s % 60;
-    return `${String(m).padStart(2, "0")}:${String(rest).padStart(2, "0")}`;
-  }
-
   const isFullScreen: Ref<boolean> = ref<boolean>(false);
-
-  const defaultMoreActions: MoreActionItem[] = [
-    { key: "share", label: "分享", icon: "🔗" },
-    { key: "favorite", label: "收藏", icon: "⭐" },
-  ];
 
   const activeMoreActions = computed<MoreActionItem[]>(() => {
     if (opts.value.moreActions && opts.value.moreActions.length > 0) {
@@ -295,6 +292,8 @@ export function useVideoControls(
     qualityOptions,
     currentQualityLabel,
     isFullScreen,
+    isBuffering,
+    isLoading,
     activeMoreActions,
     onMoreActionClick,
     clearHideTimer,
