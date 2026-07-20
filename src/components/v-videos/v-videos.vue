@@ -93,6 +93,8 @@
           {{ item.text }}
         </text>
       </view>
+    </view>
+
     <!-- 网络缓冲/加载层 (仅 isLoading 为 true 时展示) -->
     <view
       v-if="isLoading"
