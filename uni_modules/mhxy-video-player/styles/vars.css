@@ -1,0 +1,49 @@
+/**
+ * VideoPlayer 组件 CSS 自定义变量定义
+ */
+:root,
+.video-player {
+  /* 主题与品牌色 */
+  --vp-primary-color: #22c55e;
+  --vp-primary-gradient: linear-gradient(90deg, #22c55e, #4ade80);
+  --vp-primary-active-bg: rgba(34, 197, 94, 0.25);
+  --vp-bg-black: #000000;
+
+  /* 文字颜色 */
+  --vp-text-primary: rgba(255, 255, 255, 0.9);
+  --vp-text-secondary: rgba(255, 255, 255, 0.85);
+  --vp-text-muted: rgba(255, 255, 255, 0.5);
+  --vp-text-placeholder: rgba(255, 255, 255, 0.4);
+  --vp-text-dark: #06240f;
+
+  /* 遮罩与面板背景 */
+  --vp-panel-bg: rgba(10, 12, 16, 0.92);
+  --vp-send-bg: rgba(10, 12, 16, 0.95);
+  --vp-overlay-bg: rgba(0, 0, 0, 0.45);
+  --vp-toolbar-bg: rgba(0, 0, 0, 0.75);
+  --vp-input-bg: rgba(255, 255, 255, 0.1);
+  --vp-btn-bg: rgba(255, 255, 255, 0.08);
+
+  /* 进度条与滑杆 */
+  --vp-track-bg: rgba(255, 255, 255, 0.25);
+  --vp-thumb-bg: #ffffff;
+  --vp-thumb-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.4);
+
+  /* 圆角 */
+  --vp-radius-xs: 6rpx;
+  --vp-radius-sm: 10rpx;
+  --vp-radius-md: 12rpx;
+  --vp-radius-lg: 16rpx;
+  --vp-radius-xl: 24rpx;
+  --vp-radius-full: 9999px;
+
+  /* Z-Index 层级定义 */
+  --vp-z-danmaku: 10;
+  --vp-z-overlay: 20;
+  --vp-z-mask: 90;
+  --vp-z-panel: 100;
+
+  /* 毛玻璃模糊 */
+  --vp-backdrop-blur: blur(12px);
+  --vp-backdrop-blur-sm: blur(8px);
+}
