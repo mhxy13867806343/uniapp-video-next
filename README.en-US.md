@@ -28,6 +28,20 @@
 
 ---
 
+## 🌐 Online Live Demo & Build
+
+- **🚀 GitHub Pages Live H5 Demo**: [https://mhxy13867806343.github.io/uniapp-video-next/](https://mhxy13867806343.github.io/uniapp-video-next/)
+- **💻 Run Local H5 Development Server**:
+  ```bash
+  npm run dev:h5
+  ```
+- **📦 Build H5 Production Bundle (Outputs to dist/build/h5)**:
+  ```bash
+  npm run build:h5
+  ```
+
+---
+
 ## 📦 Getting Started
 
 ### 1. Basic Usage

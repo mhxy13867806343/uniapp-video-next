@@ -7,6 +7,7 @@ const uni = (uniModule as any).default || uniModule;
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: "./",
   plugins: [
     uni(),
     AutoImport({

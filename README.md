@@ -28,6 +28,20 @@
 
 ---
 
+## 🌐 在线预览与 H5 打包 (Online Preview & Build)
+
+- **🚀 GitHub Pages 在线 H5 预览**：[https://mhxy13867806343.github.io/uniapp-video-next/](https://mhxy13867806343.github.io/uniapp-video-next/)
+- **💻 本地 H5 编译预览**：
+  ```bash
+  npm run dev:h5
+  ```
+- **📦 编译并打包 H5 静态产物 (导出至 dist/build/h5)**：
+  ```bash
+  npm run build:h5
+  ```
+
+---
+
 ## 📦 安装与快速上手
 
 ### 1. 引用组件
