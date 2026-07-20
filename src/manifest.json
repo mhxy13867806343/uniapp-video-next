@@ -68,5 +68,13 @@
     "uniStatistics": {  
         "enable": false
     },
+    "h5": {
+        "title": "v-videos 播放器演示",
+        "router": {
+            "mode": "hash",
+            "base": "./"
+        },
+        "publicPath": "./"
+    },
     "vueVersion" : "3"
 }

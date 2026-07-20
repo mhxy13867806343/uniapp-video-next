@@ -1,0 +1,13 @@
+{
+  "id": "v-videos",
+  "name": "v-videos 终极跨平台视频播放器",
+  "version": "1.0.0",
+  "description": "基于 Vue 3 + TypeScript 打造的终极跨平台视频播放器，支持高性能弹幕引擎、直播源(isLive)、剧集选集(episodes)、多清晰度无缝切换、播放倍速、海量自定义 More 菜单与按键/进度条外观自由定制",
+  "keywords": ["video", "视频播放器", "弹幕", "直播", "选集", "vue3", "typescript"],
+  "dcloudext": {
+    "category": [
+      "前端组件",
+      "通用组件"
+    ]
+  }
+}
