@@ -105,17 +105,25 @@ function onMoreActionClick(payload: { item: MoreActionItem; index: number; key: 
 | `title` | `string` | `""` | Video title (displayed on Top Header in Fullscreen) |
 | `isLive` | `boolean` | `false` | Live stream source mode (Hides progress bar & duration when true) |
 | `liveText` | `string` | `"直播中"` | Live stream status tag label (e.g. `"🔴 LIVE"`) |
-| `showMoreBtn` | `boolean` | `true` | Show "More" action button (`•••`) in control bar |
+| `showDanmakuBtn` | `boolean` | `true` | Show danmaku master toggle button |
+| `showDanmakuSettingBtn` | `boolean` | `true` | Show danmaku settings button |
+| `showSendInput` | `boolean` | `true` | Show send danmaku input entry |
+| `showQualityBtn` | `boolean` | `true` | Show video resolution quality button |
+| `showRateBtn` | `boolean` | `true` | Show playback speed rate button |
+| `showEpisodesBtn` | `boolean` | `true` | Show episode selection button |
+| `showVolumeBtn` | `boolean` | `true` | Show volume adjustment button |
+| `showLoopBtn` | `boolean` | `true` | Show loop playback button |
+| `showFullscreenBtn` | `boolean` | `true` | Show fullscreen toggle button |
+| `showMoreBtn` | `boolean` | `true` | Show "More" action button (`•••`) |
 | `moreActions` | `MoreActionItem[]` | Default 2 items | Custom More actions list (Supports 2, 10, 20+ items) |
+| `episodes` | `EpisodeItem[]` | `[]` | Episode selection list (Supports 1~34+ episode grid) |
+| `currentEpisode` | `number` | `0` | Active episode index |
 | `rates` | `number[]` | `[0.5, 0.75, 1.0, 1.25, 1.5, 2.0]` | Configurable playback speed rate options |
 | `rate` | `number` | `1.0` | Initial playback speed rate |
 | `loading` | `boolean` | `false` | Network buffering / loading state (displays overlay when true) |
 | `loadingText` | `string` | `"加载中..."` | Loading overlay text indicator |
 | `loadingIcon` | `string` | `""` | Custom loading icon (Unicode / Text / Image URL) |
 | `qualities` | `QualityItem[]` | `[]` | List of video resolution qualities |
-| `danmus` | `DanmuItem[]` | `[]` | Initial list of danmaku bullet comments |
-| `icons` | `Partial<Record<IconKey, string>>` | `{}` | Custom control icons (Text/Unicode or Image URL) |
-| `platformConfig` | `VideoPlatformConfig` | `{}` | Platform-specific overrides (H5 / WeChat Mini Program / App) |
 | `danmus` | `DanmuItem[]` | `[]` | Initial list of danmaku bullet comments |
 | `icons` | `Partial<Record<IconKey, string>>` | `{}` | Custom control icons (Text/Unicode or Image URL) |
 | `platformConfig` | `VideoPlatformConfig` | `{}` | Platform-specific overrides (H5 / WeChat Mini Program / App) |
@@ -132,6 +140,7 @@ function onMoreActionClick(payload: { item: MoreActionItem; index: number; key: 
 | `timeupdate` | `{ currentTime: number; duration: number }` | Triggered on time update |
 | `qualitychange`| `{ index: number; label: string }` | Triggered when video resolution changes |
 | `ratechange` | `{ rate: number }` | Triggered when playback speed rate changes |
+| `episodechange`| `{ index: number; item: EpisodeItem }` | Triggered when active episode changes |
 | `senddanmu` | `DanmuItem` | Triggered when user submits a new danmaku |
 | `moreactionclick` | `{ item: MoreActionItem; index: number; key: string }` | Triggered when user clicks a More Action item |
 | `fullscreenchange` | `{ fullScreen: boolean }` | Triggered on fullscreen toggle |

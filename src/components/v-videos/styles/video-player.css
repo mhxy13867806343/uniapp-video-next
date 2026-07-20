@@ -643,6 +643,136 @@
   max-width: 100%;
 }
 
+/* ===== 选集剧集面板 ===== */
+.vp-panel--episodes {
+  width: 60%;
+  max-width: 560rpx;
+  padding: 24rpx 20rpx;
+}
+
+.vp-panel__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 16rpx;
+  padding: 0 8rpx;
+}
+
+.vp-panel__subtitle {
+  color: var(--vp-text-muted);
+  font-size: 22rpx;
+}
+
+.vp-episodes-scroll {
+  max-height: 360rpx;
+}
+
+.vp-episodes-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14rpx 10rpx;
+  margin-bottom: 20rpx;
+}
+
+.vp-episode-item {
+  position: relative;
+  width: calc(20% - 8rpx);
+  height: 72rpx;
+  border-radius: var(--vp-radius-md);
+  background: rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease, border-color 0.15s ease;
+  border: 1rpx solid transparent;
+}
+
+.vp-episode-item--active {
+  background: rgba(34, 197, 94, 0.18);
+  border-color: var(--vp-primary-color);
+}
+
+.vp-episode-item--active .vp-episode-item__num {
+  color: var(--vp-primary-color);
+  font-weight: 700;
+}
+
+.vp-episode-item__num {
+  color: var(--vp-text-primary);
+  font-size: 26rpx;
+  font-weight: 500;
+}
+
+.vp-episode-item__badge {
+  position: absolute;
+  top: -6rpx;
+  right: -6rpx;
+  font-size: 16rpx;
+  padding: 2rpx 8rpx;
+  border-radius: 8rpx;
+  background: #3b82f6;
+  color: #ffffff;
+  line-height: 1;
+  transform: scale(0.85);
+}
+
+.vp-episode-item__badge--vip {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+}
+
+.vp-episodes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10rpx;
+}
+
+.vp-episode-row {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  padding: 14rpx 16rpx;
+  border-radius: var(--vp-radius-md);
+  background: rgba(255, 255, 255, 0.04);
+  transition: background 0.15s ease;
+}
+
+.vp-episode-row--active {
+  background: rgba(34, 197, 94, 0.15);
+}
+
+.vp-episode-row--active .vp-episode-row__num,
+.vp-episode-row--active .vp-episode-row__title {
+  color: var(--vp-primary-color);
+  font-weight: 600;
+}
+
+.vp-episode-row__num {
+  color: var(--vp-text-muted);
+  font-size: 24rpx;
+  width: 36rpx;
+}
+
+.vp-episode-row__title {
+  color: var(--vp-text-primary);
+  font-size: 24rpx;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.vp-episode-row__badge {
+  font-size: 18rpx;
+  padding: 2rpx 10rpx;
+  border-radius: 6rpx;
+  background: #3b82f6;
+  color: #ffffff;
+}
+
+.vp-episode-row__badge--vip {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+}
+
 /* ===== Loading 加载动画 ===== */
 .vp-loading {
   position: absolute;

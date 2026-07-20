@@ -180,6 +180,7 @@
       <!-- 工具栏 -->
       <view class="vp-toolbar" @click.stop>
         <view
+          v-if="opts.showDanmakuBtn"
           class="vp-tool"
           :class="{ 'vp-tool--active': danmakuEnabled }"
           @click="toggleDanmaku"
@@ -194,7 +195,11 @@
           </text>
         </view>
 
-        <view class="vp-tool" @click="togglePanel('danmuSetting')">
+        <view
+          v-if="opts.showDanmakuSettingBtn"
+          class="vp-tool"
+          @click="togglePanel('danmuSetting')"
+        >
           <image
             v-if="isImageIcon(iconOf('danmuSetting'))"
             class="vp-tool__img"
@@ -204,7 +209,7 @@
         </view>
 
         <view
-          v-if="qualityOptions.length > 0"
+          v-if="opts.showQualityBtn && qualityOptions.length > 0"
           class="vp-tool vp-tool--label"
           @click="togglePanel('quality')"
         >
@@ -212,18 +217,31 @@
         </view>
 
         <view
-          v-if="!opts.isLive"
+          v-if="opts.showRateBtn && !opts.isLive"
           class="vp-tool vp-tool--label"
           @click="togglePanel('rate')"
         >
           <text class="vp-tool__label">{{ currentRateLabel }}</text>
         </view>
 
-        <view class="vp-send-entry" @click="togglePanel('send')">
+        <view
+          v-if="opts.showEpisodesBtn && episodeOptions.length > 0"
+          class="vp-tool vp-tool--label"
+          @click="togglePanel('episodes')"
+        >
+          <text class="vp-tool__label">{{ currentEpisodeLabel }}</text>
+        </view>
+
+        <view
+          v-if="opts.showSendInput"
+          class="vp-send-entry"
+          @click="togglePanel('send')"
+        >
           <text class="vp-send-entry__text">发个弹幕吧～</text>
         </view>
 
         <view
+          v-if="opts.showVolumeBtn"
           class="vp-tool"
           :class="{ 'vp-tool--active': mutedOn }"
           @click="onVolumeBtnClick"
@@ -239,6 +257,7 @@
         </view>
 
         <view
+          v-if="opts.showLoopBtn"
           class="vp-tool"
           :class="{ 'vp-tool--active': loopOn }"
           @click="toggleLoop"
@@ -251,7 +270,11 @@
           <text v-else class="vp-tool__icon">{{ iconOf('loop') }}</text>
         </view>
 
-        <view class="vp-tool" @click="requestFullScreen()">
+        <view
+          v-if="opts.showFullscreenBtn"
+          class="vp-tool"
+          @click="requestFullScreen()"
+        >
           <image
             v-if="isImageIcon(iconOf('fullscreen'))"
             class="vp-tool__img"
@@ -322,6 +345,59 @@
       >
         <text class="vp-panel__item-text">{{ r === 1.0 ? '1.0x (正常)' : `${r}x` }}</text>
       </view>
+    </view>
+
+    <!-- 选集剧集面板 -->
+    <view
+      v-if="panelVisible === 'episodes'"
+      class="vp-panel vp-panel--right vp-panel--episodes"
+      @click.stop
+    >
+      <view class="vp-panel__header">
+        <text class="vp-panel__title">选集</text>
+        <text class="vp-panel__subtitle">共 {{ episodeOptions.length }} 集</text>
+      </view>
+      <scroll-view class="vp-episodes-scroll" scroll-y>
+        <view class="vp-episodes-grid">
+          <view
+            v-for="(ep, idx) in episodeOptions"
+            :key="idx"
+            class="vp-episode-item"
+            :class="{ 'vp-episode-item--active': idx === activeEpisodeIndex }"
+            @click="selectEpisode(idx)"
+          >
+            <text class="vp-episode-item__num">{{ ep.number ?? (idx + 1) }}</text>
+            <text
+              v-if="ep.badge"
+              class="vp-episode-item__badge"
+              :class="{ 'vp-episode-item__badge--vip': ep.vip }"
+            >
+              {{ ep.badge }}
+            </text>
+          </view>
+        </view>
+
+        <!-- 带有长标题列表项 -->
+        <view class="vp-episodes-list">
+          <view
+            v-for="(ep, idx) in episodeOptions"
+            :key="`list-${idx}`"
+            class="vp-episode-row"
+            :class="{ 'vp-episode-row--active': idx === activeEpisodeIndex }"
+            @click="selectEpisode(idx)"
+          >
+            <text class="vp-episode-row__num">{{ ep.number ?? (idx + 1) }}</text>
+            <text class="vp-episode-row__title">{{ ep.title || `第${ep.number ?? (idx + 1)}集` }}</text>
+            <text
+              v-if="ep.badge"
+              class="vp-episode-row__badge"
+              :class="{ 'vp-episode-row__badge--vip': ep.vip }"
+            >
+              {{ ep.badge }}
+            </text>
+          </view>
+        </view>
+      </scroll-view>
     </view>
 
     <!-- 更多操作面板 -->
@@ -532,6 +608,10 @@ const {
   rateOptions,
   currentRateLabel,
   selectRate,
+  activeEpisodeIndex,
+  episodeOptions,
+  currentEpisodeLabel,
+  selectEpisode,
   isFullScreen,
   isBuffering,
   isLoading,

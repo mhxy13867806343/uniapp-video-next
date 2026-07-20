@@ -9,6 +9,22 @@
 			}
 		},
 		{
+			"path": "pages/demo-controls/demo-controls",
+			"style": {
+				"navigationBarTitleText": "控制条按键自由显隐配置",
+				"navigationBarBackgroundColor": "#0f1115",
+				"navigationBarTextStyle": "white"
+			}
+		},
+		{
+			"path": "pages/demo-episodes/demo-episodes",
+			"style": {
+				"navigationBarTitleText": "选集/剧集功能测试",
+				"navigationBarBackgroundColor": "#0f1115",
+				"navigationBarTextStyle": "white"
+			}
+		},
+		{
 			"path": "pages/demo-live/demo-live",
 			"style": {
 				"navigationBarTitleText": "直播源功能测试",

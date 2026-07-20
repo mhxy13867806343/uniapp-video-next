@@ -105,8 +105,19 @@ function onMoreActionClick(payload: { item: MoreActionItem; index: number; key: 
 | `title` | `string` | `""` | 视频标题（全屏/顶部 Header 展示） |
 | `isLive` | `boolean` | `false` | 是否为直播源（为 true 时隐藏进度条与时间，展示动态 Tag） |
 | `liveText` | `string` | `"直播中"` | 直播状态 Tag 显示文本（如 `"🔴 LIVE"`） |
-| `showMoreBtn` | `boolean` | `true` | 是否在控制条显示“更多”按钮 (`•••`) |
+| `showDanmakuBtn` | `boolean` | `true` | 是否显示弹幕总开关按钮 |
+| `showDanmakuSettingBtn` | `boolean` | `true` | 是否显示弹幕设置按钮 |
+| `showSendInput` | `boolean` | `true` | 是否显示“发个弹幕吧～”输入框 |
+| `showQualityBtn` | `boolean` | `true` | 是否显示清晰度切换按钮 |
+| `showRateBtn` | `boolean` | `true` | 是否显示播放倍速按钮 |
+| `showEpisodesBtn` | `boolean` | `true` | 是否显示剧集选集按钮 |
+| `showVolumeBtn` | `boolean` | `true` | 是否显示音量调节按钮 |
+| `showLoopBtn` | `boolean` | `true` | 是否显示循环播放按钮 |
+| `showFullscreenBtn` | `boolean` | `true` | 是否显示全屏按钮 |
+| `showMoreBtn` | `boolean` | `true` | 是否显示“更多”操作按钮 (`•••`) |
 | `moreActions` | `MoreActionItem[]` | 默认2项 | 自定义“更多”操作面板列表（支持传入 2、10、20+ 项菜单） |
+| `episodes` | `EpisodeItem[]` | `[]` | 电视剧/长视频剧集选集列表（支持 1~34+ 集网格与列表） |
+| `currentEpisode` | `number` | `0` | 当前选中剧集的索引 index |
 | `rates` | `number[]` | `[0.5, 0.75, 1.0, 1.25, 1.5, 2.0]` | 可选播放倍速选项列表 |
 | `rate` | `number` | `1.0` | 初始播放倍速 |
 | `loading` | `boolean` | `false` | 是否处于缓冲/卡顿加载状态（为 true 时展示加载浮层） |
@@ -129,6 +140,7 @@ function onMoreActionClick(payload: { item: MoreActionItem; index: number; key: 
 | `timeupdate` | `{ currentTime: number; duration: number }` | 播放进度更新时触发 |
 | `qualitychange`| `{ index: number; label: string }` | 切换清晰度时触发 |
 | `ratechange` | `{ rate: number }` | 切换播放倍速时触发 |
+| `episodechange`| `{ index: number; item: EpisodeItem }` | 切换剧集选集时触发 |
 | `senddanmu` | `DanmuItem` | 用户发送弹幕时触发 |
 | `moreactionclick` | `{ item: MoreActionItem; index: number; key: string }` | 点击更多面板项时触发 |
 | `fullscreenchange` | `{ fullScreen: boolean }` | 全屏状态切换时触发 |

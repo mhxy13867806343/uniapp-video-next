@@ -10,6 +10,7 @@ import {
 } from "vue";
 import type {
   ExtendedVideoContext,
+  EpisodeItem,
   MoreActionItem,
   PanelKey,
   QualityItem,
@@ -131,6 +132,37 @@ export function useVideoControls(
     playbackRate(rate);
     panelVisible.value = null;
     emit("ratechange", { rate });
+  }
+
+  const activeEpisodeIndex: Ref<number> = ref<number>(opts.value.currentEpisode || 0);
+
+  watch(
+    () => opts.value.currentEpisode,
+    (ep: number | undefined) => {
+      if (ep !== undefined) {
+        activeEpisodeIndex.value = ep;
+      }
+    },
+    { immediate: true }
+  );
+
+  const episodeOptions = computed<EpisodeItem[]>(() => props.episodes ?? opts.value.episodes ?? []);
+
+  const currentEpisodeLabel = computed<string>(() => {
+    const ep = episodeOptions.value[activeEpisodeIndex.value];
+    if (!ep) return "选集";
+    return ep.number ? `第${ep.number}集` : ep.title || "选集";
+  });
+
+  function selectEpisode(index: number): void {
+    const ep = episodeOptions.value[index];
+    if (!ep) return;
+    activeEpisodeIndex.value = index;
+    if (ep.url) {
+      activeSrc.value = ep.url;
+    }
+    panelVisible.value = null;
+    emit("episodechange", { index, item: ep });
   }
 
   function clearHideTimer(): void {
@@ -324,6 +356,10 @@ export function useVideoControls(
     rateOptions,
     currentRateLabel,
     selectRate,
+    activeEpisodeIndex,
+    episodeOptions,
+    currentEpisodeLabel,
+    selectEpisode,
     isFullScreen,
     isBuffering,
     isLoading,

@@ -1,4 +1,4 @@
-import type { DanmuItem, MoreActionItem, QualityItem } from "./types";
+import type { DanmuItem, EpisodeItem, MoreActionItem, QualityItem } from "./types";
 
 /** 预设示例弹幕数据 */
 export const defaultDanmus: DanmuItem[] = [
@@ -20,6 +20,16 @@ export const defaultQualities: QualityItem[] = [
 
 /** 预设播放倍速选项 */
 export const defaultRates: number[] = [0.5, 0.75, 1.0, 1.25, 1.5, 2.0];
+
+/** 预设示例剧集选集列表 */
+export const defaultEpisodes: EpisodeItem[] = [
+  { number: 1, title: "第1集 序曲与邂逅", badge: "免费", url: "https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/2minute-demo.mp4" },
+  { number: 2, title: "第2集 地球交响乐", badge: "VIP", vip: true, url: "https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/2minute-demo.mp4" },
+  { number: 3, title: "第3集 音乐圣殿的秘密", badge: "VIP", vip: true, url: "https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/2minute-demo.mp4" },
+  { number: 4, title: "第4集 拯救世界的和声", badge: "VIP", vip: true, url: "https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/2minute-demo.mp4" },
+  { number: 5, title: "第5集 大合奏！终章", badge: "VIP", vip: true, url: "https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/2minute-demo.mp4" },
+  { number: 6, title: "第6集 特别篇：原声演奏会", badge: "独播", url: "https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/2minute-demo.mp4" },
+];
 
 /** 预设示例“更多操作”菜单选项 */
 export const defaultMoreActions: MoreActionItem[] = [

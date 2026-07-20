@@ -33,6 +33,28 @@
       <text class="nav-section__title">🧪 专项功能测试页面入口</text>
 
       <view class="nav-grid">
+        <view class="nav-card" @click="navigateTo('/pages/demo-controls/demo-controls')">
+          <view class="nav-card__icon-wrap nav-card__icon-wrap--green">
+            <text class="nav-card__icon">⚙️</text>
+          </view>
+          <view class="nav-card__info">
+            <text class="nav-card__title">控制条按键自由显隐配置</text>
+            <text class="nav-card__desc">独立开/关 10 个控制条按钮，默认全为 true</text>
+          </view>
+          <text class="nav-card__arrow">→</text>
+        </view>
+
+        <view class="nav-card" @click="navigateTo('/pages/demo-episodes/demo-episodes')">
+          <view class="nav-card__icon-wrap nav-card__icon-wrap--blue">
+            <text class="nav-card__icon">📺</text>
+          </view>
+          <view class="nav-card__info">
+            <text class="nav-card__title">选集 / 剧集功能测试</text>
+            <text class="nav-card__desc">episodes / VIP 标识 / 1~34 集切集网格</text>
+          </view>
+          <text class="nav-card__arrow">→</text>
+        </view>
+
         <view class="nav-card" @click="navigateTo('/pages/demo-live/demo-live')">
           <view class="nav-card__icon-wrap nav-card__icon-wrap--red">
             <text class="nav-card__icon">🔴</text>
@@ -248,6 +270,10 @@ page {
 
 .nav-card__icon-wrap--red {
   background: rgba(239, 68, 68, 0.15);
+}
+
+.nav-card__icon-wrap--blue {
+  background: rgba(59, 130, 246, 0.15);
 }
 
 .nav-card__icon-wrap--purple {

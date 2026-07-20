@@ -18,7 +18,17 @@ export const defaultOptions: Required<Omit<VideoPlayerOptions, never>> = {
   showPlayBtn: true,
   showCenterPlayBtn: true,
   showMoreBtn: true,
+  showDanmakuBtn: true,
+  showDanmakuSettingBtn: true,
+  showSendInput: true,
+  showQualityBtn: true,
+  showRateBtn: true,
+  showEpisodesBtn: true,
+  showVolumeBtn: true,
+  showLoopBtn: true,
   moreActions: [],
+  episodes: [],
+  currentEpisode: 0,
   loading: false,
   loadingText: "加载中...",
   loadingIcon: "",
@@ -36,7 +46,8 @@ export const defaultOptions: Required<Omit<VideoPlayerOptions, never>> = {
   enablePlayGesture: false,
   showCastingButton: false,
   showLoading: true,
-  customControls: false,
+  customControls: true,
+  /** 官方 video 属性透传默认值 */
   duration: 0,
   showProgress: true,
   danmuList: [],
@@ -75,6 +86,7 @@ export const defaultIcons: Record<IconKey, string> = {
   back: "←",
   loading: "⏳",
   rate: "倍速",
+  episodes: "选集",
 };
 
 export function useVideoOptions(props: VideoPlayerProps) {

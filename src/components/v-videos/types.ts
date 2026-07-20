@@ -88,7 +88,17 @@ export type IconKey =
   | "more"
   | "back"
   | "loading"
-  | "rate";
+  | "rate"
+  | "episodes";
+
+export interface EpisodeItem {
+  number?: number | string;
+  title?: string;
+  url?: string;
+  cover?: string;
+  badge?: string;
+  vip?: boolean;
+}
 
 export interface VideoPlayerOptions {
   poster?: string;
@@ -102,7 +112,17 @@ export interface VideoPlayerOptions {
   showPlayBtn?: boolean;
   showCenterPlayBtn?: boolean;
   showMoreBtn?: boolean;
+  showDanmakuBtn?: boolean;
+  showDanmakuSettingBtn?: boolean;
+  showSendInput?: boolean;
+  showQualityBtn?: boolean;
+  showRateBtn?: boolean;
+  showEpisodesBtn?: boolean;
+  showVolumeBtn?: boolean;
+  showLoopBtn?: boolean;
   moreActions?: MoreActionItem[];
+  episodes?: EpisodeItem[];
+  currentEpisode?: number;
   loading?: boolean;
   loadingText?: string;
   loadingIcon?: string;
@@ -154,6 +174,7 @@ export interface VideoPlayerProps extends VideoPlayerOptions {
   src: string;
   platformConfig?: VideoPlatformConfig;
   qualities?: QualityItem[];
+  episodes?: EpisodeItem[];
   danmus?: DanmuItem[];
   icons?: Partial<Record<IconKey, string>>;
 }
@@ -175,6 +196,11 @@ export interface QualityChangePayload {
 
 export interface RateChangePayload {
   rate: number;
+}
+
+export interface EpisodeChangePayload {
+  index: number;
+  item: EpisodeItem;
 }
 
 export interface ProgressPayload {
@@ -208,6 +234,7 @@ export type VideoPlayerEmits = {
   (e: "error", payload: unknown): void;
   (e: "qualitychange", payload: QualityChangePayload): void;
   (e: "ratechange", payload: RateChangePayload): void;
+  (e: "episodechange", payload: EpisodeChangePayload): void;
   (e: "progress", payload: ProgressPayload): void;
   (e: "loadeddata", payload: unknown): void;
   (e: "loadstart", payload: unknown): void;
@@ -238,7 +265,15 @@ export interface DanmakuSettings {
   area: number;
 }
 
-export type PanelKey = "quality" | "danmuSetting" | "volume" | "send" | "more" | "rate" | null;
+export type PanelKey =
+  | "quality"
+  | "danmuSetting"
+  | "volume"
+  | "send"
+  | "more"
+  | "rate"
+  | "episodes"
+  | null;
 export type SettingKey = "opacity" | "fontSize" | "speed" | "area";
 
 /** 暴露给父组件引用的实例方法与属性接口 */
