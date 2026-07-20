@@ -1,0 +1,61 @@
+/**
+ * VideoPlayer 公共重复 CSS 抽离
+ */
+
+/* 居中 Flex 布局 */
+.vp-flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 全屏/绝对定位铺满 */
+.vp-absolute-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+/* 毛玻璃面板基础类 */
+.vp-glass-panel {
+  background: var(--vp-panel-bg);
+  backdrop-filter: var(--vp-backdrop-blur);
+}
+
+/* 数字等宽排版 */
+.vp-tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* 公共滑杆轨道 */
+.vp-slider-track {
+  position: relative;
+  width: 100%;
+  height: 6rpx;
+  border-radius: var(--vp-radius-xs);
+  background: var(--vp-track-bg);
+}
+
+/* 公共滑杆填充层 */
+.vp-slider-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  border-radius: var(--vp-radius-xs);
+  background: var(--vp-primary-color);
+}
+
+/* 公共滑块 Handle */
+.vp-slider-thumb {
+  position: absolute;
+  top: 50%;
+  width: 24rpx;
+  height: 24rpx;
+  border-radius: var(--vp-radius-full);
+  background: var(--vp-thumb-bg);
+  transform: translate(-50%, -50%);
+  box-shadow: var(--vp-thumb-shadow);
+}
