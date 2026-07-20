@@ -11,7 +11,7 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
-    VVideos: typeof import('./components/v-videos/v-videos.vue')['default']
     'v-videos': typeof import('./components/v-videos/v-videos.vue')['default']
+    VVideos: typeof import('./components/v-videos/v-videos.vue')['default']
   }
 }

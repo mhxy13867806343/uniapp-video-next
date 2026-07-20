@@ -10,6 +10,7 @@ import {
 } from "vue";
 import type {
   ExtendedVideoContext,
+  MoreActionItem,
   PanelKey,
   QualityItem,
   VideoPlayerOptions,
@@ -218,6 +219,29 @@ export function useVideoControls(
     return `${String(m).padStart(2, "0")}:${String(rest).padStart(2, "0")}`;
   }
 
+  const isFullScreen: Ref<boolean> = ref<boolean>(false);
+
+  const defaultMoreActions: MoreActionItem[] = [
+    { key: "share", label: "分享", icon: "🔗" },
+    { key: "favorite", label: "收藏", icon: "⭐" },
+  ];
+
+  const activeMoreActions = computed<MoreActionItem[]>(() => {
+    if (opts.value.moreActions && opts.value.moreActions.length > 0) {
+      return opts.value.moreActions;
+    }
+    return defaultMoreActions;
+  });
+
+  function onMoreActionClick(item: MoreActionItem, index: number): void {
+    panelVisible.value = null;
+    emit("moreactionclick", {
+      item,
+      index,
+      key: item.key,
+    });
+  }
+
   // 对外 API
   function play(): void {
     videoCtx.value?.play();
@@ -233,9 +257,11 @@ export function useVideoControls(
     videoCtx.value?.seek(position);
   }
   function requestFullScreen(direction: 0 | 90 | -90 = 90): void {
+    isFullScreen.value = true;
     videoCtx.value?.requestFullScreen({ direction });
   }
   function exitFullScreen(): void {
+    isFullScreen.value = false;
     videoCtx.value?.exitFullScreen();
   }
   function playbackRate(rate: number): void {
@@ -268,6 +294,9 @@ export function useVideoControls(
     progressPercent,
     qualityOptions,
     currentQualityLabel,
+    isFullScreen,
+    activeMoreActions,
+    onMoreActionClick,
     clearHideTimer,
     scheduleHide,
     toggleControls,

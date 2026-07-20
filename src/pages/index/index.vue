@@ -8,14 +8,17 @@
       <v-videos
         ref="playerRef"
         :src="videoSrc"
+        title="uni-app 官方介绍视频"
         :custom-controls="true"
         :qualities="qualities"
         :danmus="danmus"
+        :more-actions="moreActions"
         :platform-config="platformConfig"
         @play="onPlay"
         @pause="onPause"
         @ended="onEnded"
         @timeupdate="onTimeUpdate"
+        @moreactionclick="onMoreActionClick"
       />
       <view class="player-card__meta">
         <text class="player-card__status">{{ status }}</text>
@@ -31,10 +34,31 @@ import VVideos, {
   type VideoPlatformConfig,
   type QualityItem,
   type DanmuItem,
+  type MoreActionItem,
 } from '@/components/v-videos'
 
 const playerRef = ref<InstanceType<typeof VVideos> | null>(null)
 const videoSrc = ref('https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/2minute-demo.mp4')
+
+const moreActions: MoreActionItem[] = [
+  { key: 'share', label: '微信分享', icon: '🔗' },
+  { key: 'favorite', label: '加入收藏', icon: '⭐' },
+  { key: 'download', label: '缓存下载', icon: '⬇️' },
+  { key: 'cast', label: '电视投屏', icon: '📺' },
+  { key: 'copy', label: '复制链接', icon: '📋' },
+  { key: 'speed', label: '倍速播放', icon: '🚀' },
+  { key: 'pip', label: '画中画', icon: '🖼️' },
+  { key: 'screenshot', label: '视频截图', icon: '📸' },
+  { key: 'loop', label: '单曲循环', icon: '⟳' },
+  { key: 'report', label: '违规举报', icon: '⚠️' },
+]
+
+function onMoreActionClick(payload: { item: MoreActionItem; index: number; key: string }) {
+  uni.showToast({
+    title: `点击了: ${payload.item.label}`,
+    icon: 'none',
+  })
+}
 
 // 实际项目中每档清晰度对应不同的视频地址，这里用同一地址演示
 const qualities: QualityItem[] = [

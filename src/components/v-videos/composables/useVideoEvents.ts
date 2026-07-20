@@ -16,6 +16,7 @@ export function useVideoEvents(
   innerDuration: Ref<number>,
   seeking: Ref<boolean>,
   pendingSeek: Ref<number | null>,
+  isFullScreen: Ref<boolean>,
   scheduleHide: () => void,
   clearHideTimer: () => void,
   danmakuTick: (currentTime: number, previousTime: number) => void,
@@ -66,8 +67,10 @@ export function useVideoEvents(
   }
 
   function onFullscreenChange(e: Event | VideoFullscreenChangeEvent): void {
+    const fs = !!(e as VideoFullscreenChangeEvent).detail?.fullScreen;
+    isFullScreen.value = fs;
     emit("fullscreenchange", {
-      fullScreen: !!(e as VideoFullscreenChangeEvent).detail?.fullScreen,
+      fullScreen: fs,
     });
   }
 

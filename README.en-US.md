@@ -92,6 +92,9 @@ function onTimeUpdate(payload: { currentTime: number; duration: number }) {
 | `customControls`| `boolean` | `false` | Enable custom control layer UI |
 | `objectFit` | `"contain" \| "fill" \| "cover"` | `"contain"` | Video fitting mode |
 | `initialTime` | `number` | `0` | Initial playback start time (seconds) |
+| `title` | `string` | `""` | Video title (displayed on Top Header in Fullscreen) |
+| `showMoreBtn` | `boolean` | `true` | Show "More" action button (`•••`) in control bar |
+| `moreActions` | `MoreActionItem[]` | Default 2 items | Custom More actions list (Supports 2, 10, 20+ items) |
 | `qualities` | `QualityItem[]` | `[]` | List of video resolution qualities |
 | `danmus` | `DanmuItem[]` | `[]` | Initial list of danmaku bullet comments |
 | `icons` | `Partial<Record<IconKey, string>>` | `{}` | Custom control icons (Text/Unicode or Image URL) |
@@ -109,6 +112,7 @@ function onTimeUpdate(payload: { currentTime: number; duration: number }) {
 | `timeupdate` | `{ currentTime: number; duration: number }` | Triggered on time update |
 | `qualitychange`| `{ index: number; label: string }` | Triggered when video resolution changes |
 | `senddanmu` | `DanmuItem` | Triggered when user submits a new danmaku |
+| `moreactionclick` | `{ item: MoreActionItem; index: number; key: string }` | Triggered when user clicks a More Action item |
 | `fullscreenchange` | `{ fullScreen: boolean }` | Triggered on fullscreen toggle |
 
 ---

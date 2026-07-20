@@ -68,6 +68,13 @@ export interface ElementRect {
   height: number;
 }
 
+export interface MoreActionItem {
+  key: string;
+  label: string;
+  icon?: string;
+  [key: string]: unknown;
+}
+
 export type IconKey =
   | "play"
   | "pause"
@@ -77,7 +84,9 @@ export type IconKey =
   | "danmuOn"
   | "danmuOff"
   | "danmuSetting"
-  | "fullscreen";
+  | "fullscreen"
+  | "more"
+  | "back";
 
 export interface VideoPlayerOptions {
   poster?: string;
@@ -90,6 +99,8 @@ export interface VideoPlayerOptions {
   showFullscreenBtn?: boolean;
   showPlayBtn?: boolean;
   showCenterPlayBtn?: boolean;
+  showMoreBtn?: boolean;
+  moreActions?: MoreActionItem[];
   enableProgressGesture?: boolean;
   pageGesture?: boolean;
   vslideGesture?: boolean;
@@ -169,6 +180,12 @@ export interface ControlsTogglePayload {
   show: boolean;
 }
 
+export interface MoreActionPayload {
+  item: MoreActionItem;
+  index: number;
+  key: string;
+}
+
 export type VideoPlayerEmits = {
   (e: "play"): void;
   (e: "pause"): void;
@@ -186,6 +203,7 @@ export type VideoPlayerEmits = {
   (e: "fullscreenclick", payload: FullscreenClickPayload): void;
   (e: "controlstoggle", payload: ControlsTogglePayload): void;
   (e: "senddanmu", payload: DanmuItem): void;
+  (e: "moreactionclick", payload: MoreActionPayload): void;
 };
 
 /** 弹幕运行项 */
@@ -207,7 +225,7 @@ export interface DanmakuSettings {
   area: number;
 }
 
-export type PanelKey = "quality" | "danmuSetting" | "volume" | "send" | null;
+export type PanelKey = "quality" | "danmuSetting" | "volume" | "send" | "more" | null;
 export type SettingKey = "opacity" | "fontSize" | "speed" | "area";
 
 /** 暴露给父组件引用的实例方法与属性接口 */

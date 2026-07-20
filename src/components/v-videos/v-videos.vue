@@ -102,6 +102,22 @@
       :class="{ 'vp-overlay--hidden': !controlsVisible && !anyPanelVisible }"
       @click="onOverlayTap"
     >
+      <!-- 顶部标题栏（全屏/包含标题时展示） -->
+      <view
+        v-if="opts.title || isFullScreen"
+        class="vp-topbar"
+        @click.stop
+      >
+        <view
+          v-if="isFullScreen"
+          class="vp-topbar__back"
+          @click="exitFullScreen"
+        >
+          <text class="vp-tool__icon">{{ iconOf('back') }}</text>
+        </view>
+        <text class="vp-topbar__title">{{ opts.title || '' }}</text>
+      </view>
+
       <view class="vp-overlay__center" @click.stop="togglePlay">
         <text class="vp-overlay__center-icon">
           {{ isPlaying ? iconOf('pause') : iconOf('play') }}
@@ -207,6 +223,19 @@
           />
           <text v-else class="vp-tool__icon">{{ iconOf('fullscreen') }}</text>
         </view>
+
+        <view
+          v-if="opts.showMoreBtn"
+          class="vp-tool"
+          @click="togglePanel('more')"
+        >
+          <image
+            v-if="isImageIcon(iconOf('more'))"
+            class="vp-tool__img"
+            :src="iconOf('more')"
+          />
+          <text v-else class="vp-tool__icon">{{ iconOf('more') }}</text>
+        </view>
       </view>
     </view>
 
@@ -240,6 +269,35 @@
       >
         <text class="vp-panel__item-text">自动</text>
       </view>
+    </view>
+
+    <!-- 更多操作面板 -->
+    <view
+      v-if="panelVisible === 'more'"
+      class="vp-panel vp-panel--right vp-panel--more"
+      @click.stop
+    >
+      <text class="vp-panel__title">更多操作</text>
+      <scroll-view class="vp-more-scroll" scroll-y>
+        <view class="vp-more-grid">
+          <view
+            v-for="(item, idx) in activeMoreActions"
+            :key="item.key || idx"
+            class="vp-more-item"
+            @click="onMoreActionClick(item, idx)"
+          >
+            <view class="vp-more-item__icon-wrapper">
+              <image
+                v-if="item.icon && isImageIcon(item.icon)"
+                class="vp-more-item__img"
+                :src="item.icon"
+              />
+              <text v-else class="vp-more-item__icon">{{ item.icon || '⚡' }}</text>
+            </view>
+            <text class="vp-more-item__label">{{ item.label }}</text>
+          </view>
+        </view>
+      </scroll-view>
     </view>
 
     <!-- 弹幕设置面板 -->
@@ -417,6 +475,9 @@ const {
   progressPercent,
   qualityOptions,
   currentQualityLabel,
+  isFullScreen,
+  activeMoreActions,
+  onMoreActionClick,
   toggleControls,
   togglePlay,
   togglePanel,

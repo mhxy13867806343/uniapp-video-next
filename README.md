@@ -92,6 +92,9 @@ function onTimeUpdate(payload: { currentTime: number; duration: number }) {
 | `customControls`| `boolean` | `false` | 是否启用自定义控制层 UI |
 | `objectFit` | `"contain" \| "fill" \| "cover"` | `"contain"` | 视频同比例缩放模式 |
 | `initialTime` | `number` | `0` | 初始播放位置（秒） |
+| `title` | `string` | `""` | 视频标题（全屏/顶部 Header 展示） |
+| `showMoreBtn` | `boolean` | `true` | 是否在控制条显示“更多”按钮 (`•••`) |
+| `moreActions` | `MoreActionItem[]` | 默认2项 | 自定义“更多”操作面板列表（支持传入 2、10、20+ 项菜单） |
 | `qualities` | `QualityItem[]` | `[]` | 清晰度切换列表 |
 | `danmus` | `DanmuItem[]` | `[]` | 初始弹幕列表 |
 | `icons` | `Partial<Record<IconKey, string>>` | `{}` | 自定义控制条图标（支持 Unicode/文本或图片 URL） |
@@ -109,6 +112,7 @@ function onTimeUpdate(payload: { currentTime: number; duration: number }) {
 | `timeupdate` | `{ currentTime: number; duration: number }` | 播放进度更新时触发 |
 | `qualitychange`| `{ index: number; label: string }` | 切换清晰度时触发 |
 | `senddanmu` | `DanmuItem` | 用户发送弹幕时触发 |
+| `moreactionclick` | `{ item: MoreActionItem; index: number; key: string }` | 点击更多面板项时触发 |
 | `fullscreenchange` | `{ fullScreen: boolean }` | 全屏状态切换时触发 |
 
 ---

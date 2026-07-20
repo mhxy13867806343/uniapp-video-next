@@ -17,6 +17,8 @@ export const defaultOptions: Required<Omit<VideoPlayerOptions, never>> = {
   showFullscreenBtn: true,
   showPlayBtn: true,
   showCenterPlayBtn: true,
+  showMoreBtn: true,
+  moreActions: [],
   enableProgressGesture: true,
   pageGesture: false,
   vslideGesture: false,
@@ -63,6 +65,8 @@ export const defaultIcons: Record<IconKey, string> = {
   danmuOff: "弹",
   danmuSetting: "⚙",
   fullscreen: "⛶",
+  more: "•••",
+  back: "←",
 };
 
 export function useVideoOptions(props: VideoPlayerProps) {
