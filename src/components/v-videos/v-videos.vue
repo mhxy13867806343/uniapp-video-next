@@ -201,6 +201,13 @@
           <text class="vp-tool__label">{{ currentQualityLabel }}</text>
         </view>
 
+        <view
+          class="vp-tool vp-tool--label"
+          @click="togglePanel('rate')"
+        >
+          <text class="vp-tool__label">{{ currentRateLabel }}</text>
+        </view>
+
         <view class="vp-send-entry" @click="togglePanel('send')">
           <text class="vp-send-entry__text">发个弹幕吧～</text>
         </view>
@@ -286,6 +293,23 @@
         @click="selectQuality(-1)"
       >
         <text class="vp-panel__item-text">自动</text>
+      </view>
+    </view>
+
+    <!-- 倍速播放面板 -->
+    <view
+      v-if="panelVisible === 'rate'"
+      class="vp-panel vp-panel--left"
+      @click.stop
+    >
+      <view
+        v-for="r in rateOptions"
+        :key="r"
+        class="vp-panel__item"
+        :class="{ 'vp-panel__item--active': r === currentRate }"
+        @click="selectRate(r)"
+      >
+        <text class="vp-panel__item-text">{{ r === 1.0 ? '1.0x (正常)' : `${r}x` }}</text>
       </view>
     </view>
 
@@ -493,6 +517,10 @@ const {
   progressPercent,
   qualityOptions,
   currentQualityLabel,
+  currentRate,
+  rateOptions,
+  currentRateLabel,
+  selectRate,
   isFullScreen,
   isBuffering,
   isLoading,

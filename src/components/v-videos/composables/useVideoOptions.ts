@@ -22,6 +22,8 @@ export const defaultOptions: Required<Omit<VideoPlayerOptions, never>> = {
   loading: false,
   loadingText: "加载中...",
   loadingIcon: "",
+  rates: [0.5, 0.75, 1.0, 1.25, 1.5, 2.0],
+  rate: 1.0,
   enableProgressGesture: true,
   pageGesture: false,
   vslideGesture: false,
@@ -71,6 +73,7 @@ export const defaultIcons: Record<IconKey, string> = {
   more: "•••",
   back: "←",
   loading: "⏳",
+  rate: "倍速",
 };
 
 export function useVideoOptions(props: VideoPlayerProps) {

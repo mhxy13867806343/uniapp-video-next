@@ -90,7 +90,6 @@ function onTimeUpdate(payload: { currentTime: number; duration: number }) {
   duration.value = payload.duration
 }
 </script>
-</script>
 
 <style>
 page {

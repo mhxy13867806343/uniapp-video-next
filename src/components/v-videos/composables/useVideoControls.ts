@@ -104,6 +104,35 @@ export function useVideoControls(
       : "自动"
   );
 
+  const currentRate: Ref<number> = ref<number>(opts.value.rate || 1.0);
+
+  watch(
+    () => opts.value.rate,
+    (r: number) => {
+      if (r) {
+        currentRate.value = r;
+      }
+    },
+    { immediate: true }
+  );
+
+  const rateOptions = computed<number[]>(() =>
+    opts.value.rates && opts.value.rates.length > 0
+      ? opts.value.rates
+      : [0.5, 0.75, 1.0, 1.25, 1.5, 2.0]
+  );
+
+  const currentRateLabel = computed<string>(() =>
+    currentRate.value === 1.0 ? "1.0x" : `${currentRate.value}x`
+  );
+
+  function selectRate(rate: number): void {
+    currentRate.value = rate;
+    playbackRate(rate);
+    panelVisible.value = null;
+    emit("ratechange", { rate });
+  }
+
   function clearHideTimer(): void {
     if (hideTimer) {
       clearTimeout(hideTimer);
@@ -291,6 +320,10 @@ export function useVideoControls(
     progressPercent,
     qualityOptions,
     currentQualityLabel,
+    currentRate,
+    rateOptions,
+    currentRateLabel,
+    selectRate,
     isFullScreen,
     isBuffering,
     isLoading,

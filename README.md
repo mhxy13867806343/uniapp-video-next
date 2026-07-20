@@ -95,6 +95,8 @@ function onTimeUpdate(payload: { currentTime: number; duration: number }) {
 | `title` | `string` | `""` | 视频标题（全屏/顶部 Header 展示） |
 | `showMoreBtn` | `boolean` | `true` | 是否在控制条显示“更多”按钮 (`•••`) |
 | `moreActions` | `MoreActionItem[]` | 默认2项 | 自定义“更多”操作面板列表（支持传入 2、10、20+ 项菜单） |
+| `rates` | `number[]` | `[0.5, 0.75, 1.0, 1.25, 1.5, 2.0]` | 可选播放倍速选项列表 |
+| `rate` | `number` | `1.0` | 初始播放倍速 |
 | `qualities` | `QualityItem[]` | `[]` | 清晰度切换列表 |
 | `danmus` | `DanmuItem[]` | `[]` | 初始弹幕列表 |
 | `icons` | `Partial<Record<IconKey, string>>` | `{}` | 自定义控制条图标（支持 Unicode/文本或图片 URL） |
@@ -111,6 +113,7 @@ function onTimeUpdate(payload: { currentTime: number; duration: number }) {
 | `ended` | `-` | 视频播放结束时触发 |
 | `timeupdate` | `{ currentTime: number; duration: number }` | 播放进度更新时触发 |
 | `qualitychange`| `{ index: number; label: string }` | 切换清晰度时触发 |
+| `ratechange` | `{ rate: number }` | 切换播放倍速时触发 |
 | `senddanmu` | `DanmuItem` | 用户发送弹幕时触发 |
 | `moreactionclick` | `{ item: MoreActionItem; index: number; key: string }` | 点击更多面板项时触发 |
 | `fullscreenchange` | `{ fullScreen: boolean }` | 全屏状态切换时触发 |

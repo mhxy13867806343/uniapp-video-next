@@ -18,6 +18,9 @@ export const defaultQualities: QualityItem[] = [
   { label: "480P 清晰", url: "https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/2minute-demo.mp4" },
 ];
 
+/** 预设播放倍速选项 */
+export const defaultRates: number[] = [0.5, 0.75, 1.0, 1.25, 1.5, 2.0];
+
 /** 预设示例“更多操作”菜单选项 */
 export const defaultMoreActions: MoreActionItem[] = [
   { key: "share", label: "微信分享", icon: "🔗" },

@@ -87,7 +87,8 @@ export type IconKey =
   | "fullscreen"
   | "more"
   | "back"
-  | "loading";
+  | "loading"
+  | "rate";
 
 export interface VideoPlayerOptions {
   poster?: string;
@@ -105,6 +106,8 @@ export interface VideoPlayerOptions {
   loading?: boolean;
   loadingText?: string;
   loadingIcon?: string;
+  rates?: number[];
+  rate?: number;
   enableProgressGesture?: boolean;
   pageGesture?: boolean;
   vslideGesture?: boolean;
@@ -169,6 +172,10 @@ export interface QualityChangePayload {
   label: string;
 }
 
+export interface RateChangePayload {
+  rate: number;
+}
+
 export interface ProgressPayload {
   buffered: number;
 }
@@ -199,6 +206,7 @@ export type VideoPlayerEmits = {
   (e: "waiting"): void;
   (e: "error", payload: unknown): void;
   (e: "qualitychange", payload: QualityChangePayload): void;
+  (e: "ratechange", payload: RateChangePayload): void;
   (e: "progress", payload: ProgressPayload): void;
   (e: "loadeddata", payload: unknown): void;
   (e: "loadstart", payload: unknown): void;
@@ -229,7 +237,7 @@ export interface DanmakuSettings {
   area: number;
 }
 
-export type PanelKey = "quality" | "danmuSetting" | "volume" | "send" | "more" | null;
+export type PanelKey = "quality" | "danmuSetting" | "volume" | "send" | "more" | "rate" | null;
 export type SettingKey = "opacity" | "fontSize" | "speed" | "area";
 
 /** 暴露给父组件引用的实例方法与属性接口 */

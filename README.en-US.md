@@ -95,6 +95,8 @@ function onTimeUpdate(payload: { currentTime: number; duration: number }) {
 | `title` | `string` | `""` | Video title (displayed on Top Header in Fullscreen) |
 | `showMoreBtn` | `boolean` | `true` | Show "More" action button (`•••`) in control bar |
 | `moreActions` | `MoreActionItem[]` | Default 2 items | Custom More actions list (Supports 2, 10, 20+ items) |
+| `rates` | `number[]` | `[0.5, 0.75, 1.0, 1.25, 1.5, 2.0]` | Configurable playback speed rate options |
+| `rate` | `number` | `1.0` | Initial playback speed rate |
 | `qualities` | `QualityItem[]` | `[]` | List of video resolution qualities |
 | `danmus` | `DanmuItem[]` | `[]` | Initial list of danmaku bullet comments |
 | `icons` | `Partial<Record<IconKey, string>>` | `{}` | Custom control icons (Text/Unicode or Image URL) |
@@ -111,6 +113,7 @@ function onTimeUpdate(payload: { currentTime: number; duration: number }) {
 | `ended` | `-` | Triggered when video reaches the end |
 | `timeupdate` | `{ currentTime: number; duration: number }` | Triggered on time update |
 | `qualitychange`| `{ index: number; label: string }` | Triggered when video resolution changes |
+| `ratechange` | `{ rate: number }` | Triggered when playback speed rate changes |
 | `senddanmu` | `DanmuItem` | Triggered when user submits a new danmaku |
 | `moreactionclick` | `{ item: MoreActionItem; index: number; key: string }` | Triggered when user clicks a More Action item |
 | `fullscreenchange` | `{ fullScreen: boolean }` | Triggered on fullscreen toggle |
