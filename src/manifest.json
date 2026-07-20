@@ -72,9 +72,9 @@
         "title": "v-videos 播放器演示",
         "router": {
             "mode": "hash",
-            "base": "./"
+            "base": "/uniapp-video-next/"
         },
-        "publicPath": "./"
+        "publicPath": "/uniapp-video-next/"
     },
     "vueVersion" : "3"
 }
